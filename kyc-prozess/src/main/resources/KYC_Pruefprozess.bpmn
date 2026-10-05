@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                   xmlns:drools="http://www.jboss.org/drools"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   id="Definitions_KYC" exporter="Hand" targetNamespace="http://www.omg.org/bpmn20">
+
+  <bpmn2:itemDefinition id="_MapItem" structureRef="java.util.Map"/>
+  <bpmn2:itemDefinition id="_ListItem" structureRef="java.util.List"/>
+  <bpmn2:itemDefinition id="_StringItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_BooleanItem" structureRef="Boolean"/>
+  <bpmn2:itemDefinition id="_LlmResultItem" structureRef="de.piu.kyc.LlmResult"/>
+
+  <bpmn2:interface id="Interface_Laya" name="de.piu.kyc.LayaAssessmentService" implementationRef="de.piu.kyc.LayaAssessmentService">
+    <bpmn2:operation id="Operation_Laya" name="assess" implementationRef="assess"/>
+  </bpmn2:interface>
+
+  <bpmn2:process id="kyc_review" name="KYC-Prüfung: Regeln, LLM und manuelle Prüfung"
+                 drools:packageName="de.piu.kyc" drools:version="1.0" drools:adHoc="false"
+                 isExecutable="true" processType="Public">
+    <bpmn2:documentation>Ausführbare Fassung von KYC_Pruefprozess.bpmn (Planungsentwurf im Projektwurzelverzeichnis). Eingangsvoraussetzung: Identitätsprüfung erfolgreich abgeschlossen. Regeln R1–R4 (DMN KYC_RuleCheck) markieren manuellen Prüfbedarf, R5 (bestätigter Sanktionstreffer) führt direkt zur Ablehnung. Auch bei grünem Regelergebnis folgt die Laya-Prüfung. Automatische Freigabe nur bei grünem Regelergebnis und Laya-Entscheidung keine_manuelle_pruefung. Technische Fehler der Laya-Prüfung führen zur manuellen Prüfung.</bpmn2:documentation>
+
+    <bpmn2:property id="application" itemSubjectRef="_MapItem" name="application"/>
+    <bpmn2:property id="rule_result" itemSubjectRef="_StringItem" name="rule_result"/>
+    <bpmn2:property id="triggered_rules" itemSubjectRef="_ListItem" name="triggered_rules"/>
+    <bpmn2:property id="llm_result" itemSubjectRef="_LlmResultItem" name="llm_result"/>
+    <bpmn2:property id="manual_decision" itemSubjectRef="_StringItem" name="manual_decision"/>
+    <bpmn2:property id="manual_comment" itemSubjectRef="_StringItem" name="manual_comment"/>
+
+    <bpmn2:startEvent id="Start_KYC" name="Identitäts&#173;prüfung erfolgreich abgeschlossen">
+      <bpmn2:outgoing>Flow_Start</bpmn2:outgoing>
+    </bpmn2:startEvent>
+
+    <!-- Prüfung nach Regeln: DMN-Entscheidungstabelle -->
+    <bpmn2:businessRuleTask id="Task_Rules" name="Prüfung nach Regeln" implementation="http://www.jboss.org/drools/dmn">
+      <bpmn2:documentation>DMN KYC_RuleCheck: R1 Kunde nicht selbst wirtschaftlich berechtigt; R2 PEP bestätigt; R3 möglicher Screening-Treffer ungeklärt; R4 USA-Bezug. Diese Trigger erzeugen manuellen Prüfbedarf. R5 bestätigter Sanktionstreffer ergibt rule_result = reject.</bpmn2:documentation>
+      <bpmn2:incoming>Flow_Start</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_Rules_Result</bpmn2:outgoing>
+      <bpmn2:ioSpecification>
+        <bpmn2:dataInput id="Task_Rules_namespaceInput" drools:dtype="String" itemSubjectRef="_StringItem" name="namespace"/>
+        <bpmn2:dataInput id="Task_Rules_modelInput" drools:dtype="String" itemSubjectRef="_StringItem" name="model"/>
+        <bpmn2:dataInput id="Task_Rules_ApplicationInput" drools:dtype="java.util.Map" itemSubjectRef="_MapItem" name="Application"/>
+        <bpmn2:dataOutput id="Task_Rules_RuleResultOutput" drools:dtype="String" itemSubjectRef="_StringItem" name="RuleResult"/>
+        <bpmn2:dataOutput id="Task_Rules_TriggeredRulesOutput" drools:dtype="java.util.List" itemSubjectRef="_ListItem" name="TriggeredRules"/>
+        <bpmn2:inputSet>
+          <bpmn2:dataInputRefs>Task_Rules_namespaceInput</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_Rules_modelInput</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_Rules_ApplicationInput</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet>
+          <bpmn2:dataOutputRefs>Task_Rules_RuleResultOutput</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>Task_Rules_TriggeredRulesOutput</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation>
+        <bpmn2:targetRef>Task_Rules_namespaceInput</bpmn2:targetRef>
+        <bpmn2:assignment>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression">https://example.org/kyc/rule-check</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression">Task_Rules_namespaceInput</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation>
+        <bpmn2:targetRef>Task_Rules_modelInput</bpmn2:targetRef>
+        <bpmn2:assignment>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression">KYC_RuleCheck</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression">Task_Rules_modelInput</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation>
+        <bpmn2:sourceRef>application</bpmn2:sourceRef>
+        <bpmn2:targetRef>Task_Rules_ApplicationInput</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation>
+        <bpmn2:sourceRef>Task_Rules_RuleResultOutput</bpmn2:sourceRef>
+        <bpmn2:targetRef>rule_result</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation>
+        <bpmn2:sourceRef>Task_Rules_TriggeredRulesOutput</bpmn2:sourceRef>
+        <bpmn2:targetRef>triggered_rules</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:businessRuleTask>
+
+    <bpmn2:exclusiveGateway id="Gateway_Rules" name="Ablehnung durch Regeln?" gatewayDirection="Diverging" default="Flow_Rules_LLM">
+      <bpmn2:incoming>Flow_Rules_Result</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_Rules_LLM</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_Rules_Reject</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+
+    <!-- Prüfung mit LLM: Java-Service ruft den Laya-Dienst -->
+    <bpmn2:serviceTask id="Task_LLM" name="Prüfung mit LLM" implementation="Java" operationRef="Operation_Laya"
+                       drools:serviceimplementation="Java" drools:serviceinterface="de.piu.kyc.LayaAssessmentService"
+                       drools:serviceoperation="assess">
+      <bpmn2:documentation>Wird auch nach grünem Regelergebnis ausgeführt. Laya Multilingual (KYC-angepasst) bewertet den Antrag einschließlich Regelergebnis: keine_manuelle_pruefung, manuelle_pruefung oder unklar. Bei technischem Fehler: fehler, manuelle Prüfung.</bpmn2:documentation>
+      <bpmn2:incoming>Flow_Rules_LLM</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_LLM_Result</bpmn2:outgoing>
+      <bpmn2:ioSpecification>
+        <bpmn2:dataInput id="Task_LLM_applicationInput" drools:dtype="java.util.Map" itemSubjectRef="_MapItem" name="application"/>
+        <bpmn2:dataInput id="Task_LLM_triggeredRulesInput" drools:dtype="java.util.List" itemSubjectRef="_ListItem" name="triggeredRules"/>
+        <bpmn2:dataOutput id="Task_LLM_ResultOutput" drools:dtype="de.piu.kyc.LlmResult" itemSubjectRef="_LlmResultItem" name="Result"/>
+        <bpmn2:inputSet>
+          <bpmn2:dataInputRefs>Task_LLM_applicationInput</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_LLM_triggeredRulesInput</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet>
+          <bpmn2:dataOutputRefs>Task_LLM_ResultOutput</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation>
+        <bpmn2:sourceRef>application</bpmn2:sourceRef>
+        <bpmn2:targetRef>Task_LLM_applicationInput</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation>
+        <bpmn2:sourceRef>triggered_rules</bpmn2:sourceRef>
+        <bpmn2:targetRef>Task_LLM_triggeredRulesInput</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation>
+        <bpmn2:sourceRef>Task_LLM_ResultOutput</bpmn2:sourceRef>
+        <bpmn2:targetRef>llm_result</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:serviceTask>
+
+    <bpmn2:exclusiveGateway id="Gateway_LLM" name="Manuelle Prüfung erforderlich?" gatewayDirection="Diverging" default="Flow_LLM_Manual">
+      <bpmn2:incoming>Flow_LLM_Result</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_LLM_Approve</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_LLM_Manual</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+
+    <bpmn2:exclusiveGateway id="Gateway_Join_Manual" gatewayDirection="Converging">
+      <bpmn2:incoming>Flow_LLM_Manual</bpmn2:incoming>
+      <bpmn2:incoming>Flow_Manual_Retry</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_Join_Manual</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+
+    <!-- Manuelle Prüfung: User Task für die Gruppe kyc-pruefer -->
+    <bpmn2:userTask id="Task_Manual" name="Manuelle Prüfung">
+      <bpmn2:documentation>Ergebnis: decision = approve oder reject, optional comment. Fehlt die Entscheidung oder ist sie ungültig (auch nach skip), wird die Aufgabe erneut erstellt.</bpmn2:documentation>
+      <bpmn2:incoming>Flow_Join_Manual</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_Manual_Result</bpmn2:outgoing>
+      <bpmn2:ioSpecification>
+        <bpmn2:dataInput id="Task_Manual_TaskNameInput" drools:dtype="Object" name="TaskName"/>
+        <bpmn2:dataInput id="Task_Manual_GroupIdInput" drools:dtype="Object" name="GroupId"/>
+        <bpmn2:dataInput id="Task_Manual_SkippableInput" drools:dtype="Object" name="Skippable"/>
+        <bpmn2:dataInput id="Task_Manual_applicationInput" drools:dtype="java.util.Map" itemSubjectRef="_MapItem" name="application"/>
+        <bpmn2:dataInput id="Task_Manual_triggeredRulesInput" drools:dtype="java.util.List" itemSubjectRef="_ListItem" name="triggered_rules"/>
+        <bpmn2:dataInput id="Task_Manual_llmInput" drools:dtype="de.piu.kyc.LlmResult" itemSubjectRef="_LlmResultItem" name="llm_result"/>
+        <bpmn2:dataOutput id="Task_Manual_decisionOutput" drools:dtype="String" itemSubjectRef="_StringItem" name="decision"/>
+        <bpmn2:dataOutput id="Task_Manual_commentOutput" drools:dtype="String" itemSubjectRef="_StringItem" name="comment"/>
+        <bpmn2:inputSet>
+          <bpmn2:dataInputRefs>Task_Manual_TaskNameInput</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_Manual_GroupIdInput</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_Manual_SkippableInput</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_Manual_applicationInput</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_Manual_triggeredRulesInput</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_Manual_llmInput</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet>
+          <bpmn2:dataOutputRefs>Task_Manual_decisionOutput</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>Task_Manual_commentOutput</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation>
+        <bpmn2:targetRef>Task_Manual_TaskNameInput</bpmn2:targetRef>
+        <bpmn2:assignment>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression">ManualReview</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression">Task_Manual_TaskNameInput</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation>
+        <bpmn2:targetRef>Task_Manual_GroupIdInput</bpmn2:targetRef>
+        <bpmn2:assignment>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression">kyc-reviewers</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression">Task_Manual_GroupIdInput</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation>
+        <bpmn2:targetRef>Task_Manual_SkippableInput</bpmn2:targetRef>
+        <bpmn2:assignment>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression">false</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression">Task_Manual_SkippableInput</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation>
+        <bpmn2:sourceRef>application</bpmn2:sourceRef>
+        <bpmn2:targetRef>Task_Manual_applicationInput</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation>
+        <bpmn2:sourceRef>triggered_rules</bpmn2:sourceRef>
+        <bpmn2:targetRef>Task_Manual_triggeredRulesInput</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation>
+        <bpmn2:sourceRef>llm_result</bpmn2:sourceRef>
+        <bpmn2:targetRef>Task_Manual_llmInput</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation>
+        <bpmn2:sourceRef>Task_Manual_decisionOutput</bpmn2:sourceRef>
+        <bpmn2:targetRef>manual_decision</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation>
+        <bpmn2:sourceRef>Task_Manual_commentOutput</bpmn2:sourceRef>
+        <bpmn2:targetRef>manual_comment</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:userTask>
+
+    <bpmn2:exclusiveGateway id="Gateway_Manual" name="Entscheidung" gatewayDirection="Diverging" default="Flow_Manual_Retry">
+      <bpmn2:incoming>Flow_Manual_Result</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_Manual_Approve</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_Manual_Reject</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_Manual_Retry</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+
+    <!-- jBPM erlaubt an End-Events nur eine eingehende Kante: Zusammenführung per Gateway -->
+    <bpmn2:exclusiveGateway id="Gateway_Join_Approve" gatewayDirection="Converging">
+      <bpmn2:incoming>Flow_LLM_Approve</bpmn2:incoming>
+      <bpmn2:incoming>Flow_Manual_Approve</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_Join_Approve</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:exclusiveGateway id="Gateway_Join_Reject" gatewayDirection="Converging">
+      <bpmn2:incoming>Flow_Rules_Reject</bpmn2:incoming>
+      <bpmn2:incoming>Flow_Manual_Reject</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_Join_Reject</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:endEvent id="End_Approve" name="Freigabe">
+      <bpmn2:incoming>Flow_Join_Approve</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:endEvent id="End_Reject" name="Ablehnung">
+      <bpmn2:incoming>Flow_Join_Reject</bpmn2:incoming>
+    </bpmn2:endEvent>
+
+    <bpmn2:sequenceFlow id="Flow_Start" sourceRef="Start_KYC" targetRef="Task_Rules"/>
+    <bpmn2:sequenceFlow id="Flow_Rules_Result" sourceRef="Task_Rules" targetRef="Gateway_Rules"/>
+    <bpmn2:sequenceFlow id="Flow_Rules_LLM" name="Nein: grün / Prüfbedarf" sourceRef="Gateway_Rules" targetRef="Task_LLM"/>
+    <bpmn2:sequenceFlow id="Flow_Rules_Reject" name="Ja: Ablehnung" sourceRef="Gateway_Rules" targetRef="Gateway_Join_Reject">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" language="http://www.java.com/java">return "reject".equals(rule_result);</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="Flow_LLM_Result" sourceRef="Task_LLM" targetRef="Gateway_LLM"/>
+    <bpmn2:sequenceFlow id="Flow_LLM_Approve" name="Nein und Regeln grün" sourceRef="Gateway_LLM" targetRef="Gateway_Join_Approve">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" language="http://www.java.com/java">return "green".equals(rule_result) &amp;&amp; llm_result != null &amp;&amp; "keine_manuelle_pruefung".equals(llm_result.getDecision());</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="Flow_LLM_Manual" name="Ja / LLM unklar / Regeltrigger" sourceRef="Gateway_LLM" targetRef="Gateway_Join_Manual"/>
+    <bpmn2:sequenceFlow id="Flow_Join_Manual" sourceRef="Gateway_Join_Manual" targetRef="Task_Manual"/>
+    <bpmn2:sequenceFlow id="Flow_Manual_Retry" name="keine gültige Entscheidung" sourceRef="Gateway_Manual" targetRef="Gateway_Join_Manual"/>
+    <bpmn2:sequenceFlow id="Flow_Manual_Result" sourceRef="Task_Manual" targetRef="Gateway_Manual"/>
+    <bpmn2:sequenceFlow id="Flow_Manual_Approve" name="Freigabe" sourceRef="Gateway_Manual" targetRef="Gateway_Join_Approve">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" language="http://www.java.com/java">return "approve".equals(manual_decision);</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="Flow_Manual_Reject" name="Ablehnung" sourceRef="Gateway_Manual" targetRef="Gateway_Join_Reject">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" language="http://www.java.com/java">return "reject".equals(manual_decision);</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="Flow_Join_Approve" sourceRef="Gateway_Join_Approve" targetRef="End_Approve"/>
+    <bpmn2:sequenceFlow id="Flow_Join_Reject" sourceRef="Gateway_Join_Reject" targetRef="End_Reject"/>
+  </bpmn2:process>
+
+  <bpmndi:BPMNDiagram id="Diagram_KYC" name="KYC-Prüfprozess">
+    <bpmndi:BPMNPlane id="Plane_KYC" bpmnElement="kyc_review">
+      <bpmndi:BPMNShape id="Shape_Start_KYC" bpmnElement="Start_KYC">
+        <dc:Bounds x="42" y="282" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="5" y="325" width="110" height="40"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Rules" bpmnElement="Task_Rules">
+        <dc:Bounds x="130" y="260" width="140" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_Rules" bpmnElement="Gateway_Rules" isMarkerVisible="true">
+        <dc:Bounds x="315" y="275" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="295" y="240" width="90" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_LLM" bpmnElement="Task_LLM">
+        <dc:Bounds x="480" y="260" width="140" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_LLM" bpmnElement="Gateway_LLM" isMarkerVisible="true">
+        <dc:Bounds x="665" y="275" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="642" y="358" width="96" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_Join_Manual" bpmnElement="Gateway_Join_Manual" isMarkerVisible="true">
+        <dc:Bounds x="785" y="275" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Manual" bpmnElement="Task_Manual">
+        <dc:Bounds x="880" y="260" width="140" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_Manual" bpmnElement="Gateway_Manual" isMarkerVisible="true">
+        <dc:Bounds x="1065" y="275" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1015" y="258" width="70" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_Join_Approve" bpmnElement="Gateway_Join_Approve" isMarkerVisible="true">
+        <dc:Bounds x="1185" y="115" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Approve" bpmnElement="End_Approve">
+        <dc:Bounds x="1292" y="122" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1280" y="165" width="60" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_Join_Reject" bpmnElement="Gateway_Join_Reject" isMarkerVisible="true">
+        <dc:Bounds x="1185" y="455" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Reject" bpmnElement="End_Reject">
+        <dc:Bounds x="1292" y="462" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1280" y="505" width="60" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Flow_Start" bpmnElement="Flow_Start">
+        <di:waypoint x="78" y="300"/>
+        <di:waypoint x="130" y="300"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Rules_Result" bpmnElement="Flow_Rules_Result">
+        <di:waypoint x="270" y="300"/>
+        <di:waypoint x="315" y="300"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Rules_LLM" bpmnElement="Flow_Rules_LLM">
+        <di:waypoint x="365" y="300"/>
+        <di:waypoint x="480" y="300"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="375" y="308" width="100" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Rules_Reject" bpmnElement="Flow_Rules_Reject">
+        <di:waypoint x="340" y="325"/>
+        <di:waypoint x="340" y="480"/>
+        <di:waypoint x="1185" y="480"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="350" y="455" width="80" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_LLM_Result" bpmnElement="Flow_LLM_Result">
+        <di:waypoint x="620" y="300"/>
+        <di:waypoint x="665" y="300"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_LLM_Approve" bpmnElement="Flow_LLM_Approve">
+        <di:waypoint x="690" y="275"/>
+        <di:waypoint x="690" y="140"/>
+        <di:waypoint x="1185" y="140"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="700" y="118" width="120" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_LLM_Manual" bpmnElement="Flow_LLM_Manual">
+        <di:waypoint x="715" y="300"/>
+        <di:waypoint x="785" y="300"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="718" y="245" width="65" height="40"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Join_Manual" bpmnElement="Flow_Join_Manual">
+        <di:waypoint x="835" y="300"/>
+        <di:waypoint x="880" y="300"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Manual_Result" bpmnElement="Flow_Manual_Result">
+        <di:waypoint x="1020" y="300"/>
+        <di:waypoint x="1065" y="300"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Manual_Approve" bpmnElement="Flow_Manual_Approve">
+        <di:waypoint x="1090" y="275"/>
+        <di:waypoint x="1090" y="215"/>
+        <di:waypoint x="1210" y="215"/>
+        <di:waypoint x="1210" y="165"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1120" y="195" width="60" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Manual_Reject" bpmnElement="Flow_Manual_Reject">
+        <di:waypoint x="1115" y="300"/>
+        <di:waypoint x="1210" y="300"/>
+        <di:waypoint x="1210" y="455"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1220" y="370" width="60" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Manual_Retry" bpmnElement="Flow_Manual_Retry">
+        <di:waypoint x="1090" y="325"/>
+        <di:waypoint x="1090" y="400"/>
+        <di:waypoint x="810" y="400"/>
+        <di:waypoint x="810" y="325"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="880" y="405" width="150" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Join_Approve" bpmnElement="Flow_Join_Approve">
+        <di:waypoint x="1235" y="140"/>
+        <di:waypoint x="1292" y="140"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Join_Reject" bpmnElement="Flow_Join_Reject">
+        <di:waypoint x="1235" y="480"/>
+        <di:waypoint x="1292" y="480"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

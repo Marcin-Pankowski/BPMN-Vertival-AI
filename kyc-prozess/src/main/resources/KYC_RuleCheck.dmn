@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dmn:definitions xmlns:dmn="https://www.omg.org/spec/DMN/20230324/MODEL/"
+                 xmlns:dmndi="https://www.omg.org/spec/DMN/20230324/DMNDI/"
+                 xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+                 xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/"
+                 xmlns:feel="https://www.omg.org/spec/DMN/20230324/FEEL/"
+                 id="KYC_RuleCheck"
+                 name="KYC_RuleCheck"
+                 namespace="https://example.org/kyc/rule-check">
+  <dmn:description>Fünf Demo-Regeln der fiktiven Richtlinie. R1–R4 erzeugen manuellen Prüfbedarf; R5 (bestätigter Sanktionstreffer) ist ein Ausschlussgrund und führt zur Ablehnung ohne LLM-Prüfung. Die Feldnamen im Antrag folgen dem Datensatzschema.</dmn:description>
+
+  <dmn:inputData id="Input_Application" name="Application">
+    <dmn:description>KYC-Antragsdaten (Schema KYC_Trainingsdaten.schema.json, Feld eingabe)</dmn:description>
+    <dmn:variable id="Var_Application" name="Application" typeRef="Any"/>
+  </dmn:inputData>
+
+  <dmn:decision id="Decision_TriggeredRules" name="TriggeredRules">
+    <dmn:variable id="Var_TriggeredRules" name="TriggeredRules" typeRef="Any"/>
+    <dmn:informationRequirement id="IR_TriggeredRules_Application">
+      <dmn:requiredInput href="#Input_Application"/>
+    </dmn:informationRequirement>
+    <dmn:decisionTable id="Table_TriggeredRules" hitPolicy="COLLECT" outputLabel="TriggeredRules">
+      <dmn:input id="In_BeneficialOwner" label="Kunde selbst wirtschaftlich berechtigt">
+        <dmn:inputExpression id="InExpr_BeneficialOwner" typeRef="string">
+          <dmn:text>Application.kunde.ist_selbst_wirtschaftlich_berechtigt</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:input id="In_PEP" label="PEP">
+        <dmn:inputExpression id="InExpr_PEP" typeRef="string">
+          <dmn:text>Application.screening.pep</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:input id="In_Screening" label="Sanktionsscreening">
+        <dmn:inputExpression id="InExpr_Screening" typeRef="string">
+          <dmn:text>Application.screening.sanktionsscreening_status</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:input id="In_UsNexus" label="USA-Bezug">
+        <dmn:inputExpression id="InExpr_UsNexus" typeRef="boolean">
+          <dmn:text>Application.steuerangaben.us_steuerpflicht_laut_selbstauskunft = "Ja"
+or Application.steuerangaben.fatca_us_person_laut_selbstauskunft = "Ja"
+or (if Application.kunde.staatsangehoerigkeiten = null then false
+    else list contains(Application.kunde.staatsangehoerigkeiten, "US"))
+or (if Application.steuerangaben.steuerliche_ansaessigkeit_laut_selbstauskunft = null then false
+    else list contains(Application.steuerangaben.steuerliche_ansaessigkeit_laut_selbstauskunft, "US"))
+or Application.kunde.adresse.land = "US"
+or (if Application.kunde.auslandsadressen = null then false
+    else some address in Application.kunde.auslandsadressen satisfies address.land = "US")</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:output id="Out_Rule" name="Rule" typeRef="string"/>
+      <dmn:annotation name="Description"/>
+      <dmn:rule id="Rule_R1">
+        <dmn:inputEntry id="R1_1"><dmn:text>"Nein"</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R1_2"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R1_3"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R1_4"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:outputEntry id="R1_O"><dmn:text>"R1"</dmn:text></dmn:outputEntry>
+        <dmn:annotationEntry><dmn:text>Kunde nicht selbst wirtschaftlich berechtigt</dmn:text></dmn:annotationEntry>
+      </dmn:rule>
+      <dmn:rule id="Rule_R2">
+        <dmn:inputEntry id="R2_1"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R2_2"><dmn:text>"Ja"</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R2_3"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R2_4"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:outputEntry id="R2_O"><dmn:text>"R2"</dmn:text></dmn:outputEntry>
+        <dmn:annotationEntry><dmn:text>PEP-Status bestätigt</dmn:text></dmn:annotationEntry>
+      </dmn:rule>
+      <dmn:rule id="Rule_R3">
+        <dmn:inputEntry id="R3_1"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R3_2"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R3_3"><dmn:text>"moeglicher_treffer_ungeklaert"</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R3_4"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:outputEntry id="R3_O"><dmn:text>"R3"</dmn:text></dmn:outputEntry>
+        <dmn:annotationEntry><dmn:text>Möglicher Screening-Treffer ungeklärt</dmn:text></dmn:annotationEntry>
+      </dmn:rule>
+      <dmn:rule id="Rule_R4">
+        <dmn:inputEntry id="R4_1"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R4_2"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R4_3"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R4_4"><dmn:text>true</dmn:text></dmn:inputEntry>
+        <dmn:outputEntry id="R4_O"><dmn:text>"R4"</dmn:text></dmn:outputEntry>
+        <dmn:annotationEntry><dmn:text>USA-Bezug: US-Steuerpflicht, FATCA-US-Person, US-Staatsangehörigkeit, steuerliche Ansässigkeit USA oder Adresse in den USA</dmn:text></dmn:annotationEntry>
+      </dmn:rule>
+      <dmn:rule id="Rule_R5">
+        <dmn:inputEntry id="R5_1"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R5_2"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R5_3"><dmn:text>"bestaetigter_treffer"</dmn:text></dmn:inputEntry>
+        <dmn:inputEntry id="R5_4"><dmn:text>-</dmn:text></dmn:inputEntry>
+        <dmn:outputEntry id="R5_O"><dmn:text>"R5"</dmn:text></dmn:outputEntry>
+        <dmn:annotationEntry><dmn:text>Bestätigter Sanktionstreffer: Ausschlussgrund, Ablehnung</dmn:text></dmn:annotationEntry>
+      </dmn:rule>
+    </dmn:decisionTable>
+  </dmn:decision>
+
+  <dmn:decision id="Decision_RuleResult" name="RuleResult">
+    <dmn:description>reject: Ausschlussgrund R5 liegt vor; review: mindestens eine andere Regel verlangt manuelle Prüfung; green: keine Regel ausgelöst.</dmn:description>
+    <dmn:variable id="Var_RuleResult" name="RuleResult" typeRef="string"/>
+    <dmn:informationRequirement id="IR_RuleResult_TriggeredRules">
+      <dmn:requiredDecision href="#Decision_TriggeredRules"/>
+    </dmn:informationRequirement>
+    <dmn:literalExpression id="Expr_RuleResult">
+      <dmn:text>if list contains(TriggeredRules, "R5") then "reject"
+else if count(TriggeredRules) &gt; 0 then "review"
+else "green"</dmn:text>
+    </dmn:literalExpression>
+  </dmn:decision>
+
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_RuleCheck" name="KYC_RuleCheck">
+      <dmndi:DMNShape id="Shape_Application" dmnElementRef="Input_Application">
+        <dc:Bounds x="80" y="320" width="160" height="60"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Shape_TriggeredRules" dmnElementRef="Decision_TriggeredRules">
+        <dc:Bounds x="80" y="180" width="160" height="60"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Shape_RuleResult" dmnElementRef="Decision_RuleResult">
+        <dc:Bounds x="80" y="40" width="160" height="60"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="Edge_Application_TriggeredRules" dmnElementRef="IR_TriggeredRules_Application">
+        <di:waypoint x="160" y="320"/>
+        <di:waypoint x="160" y="240"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="Edge_TriggeredRules_RuleResult" dmnElementRef="IR_RuleResult_TriggeredRules">
+        <di:waypoint x="160" y="180"/>
+        <di:waypoint x="160" y="100"/>
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</dmn:definitions>

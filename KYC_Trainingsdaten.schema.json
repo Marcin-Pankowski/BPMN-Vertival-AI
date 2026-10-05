@@ -1,0 +1,560 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/synthetic-kyc/dataset-1.schema.json",
+  "type": "object",
+  "properties": {
+    "metadaten": {
+      "type": "object"
+    },
+    "demo_richtlinie": {
+      "type": "object"
+    },
+    "kunden": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kunden_id": {
+            "type": "string",
+            "pattern": "^SYN-KYC-[0-9]{6}$"
+          },
+          "metadaten": {
+            "type": "object",
+            "properties": {
+              "split": {
+                "enum": [
+                  "train",
+                  "validation",
+                  "test"
+                ]
+              },
+              "familie_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "szenario": {
+                "type": "string",
+                "minLength": 1
+              },
+              "variante": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 20
+              },
+              "synthetisch": {
+                "const": true
+              }
+            },
+            "required": [
+              "split",
+              "familie_id",
+              "szenario",
+              "variante",
+              "synthetisch"
+            ],
+            "additionalProperties": false
+          },
+          "eingabe": {
+            "type": "object",
+            "properties": {
+              "prozessphase": {
+                "const": "nach_identifizierung_vor_kontoanlage"
+              },
+              "identitaetspruefung": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "const": "erfolgreich_abgeschlossen"
+                  },
+                  "datum": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "verfahren": {
+                    "enum": [
+                      "eID",
+                      "VideoIdent",
+                      "PostIdent"
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "datum",
+                  "verfahren"
+                ],
+                "additionalProperties": false
+              },
+              "kunde": {
+                "type": "object",
+                "properties": {
+                  "vorname": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "nachname": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "geburtsdatum": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "staatsangehoerigkeiten": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1
+                  },
+                  "adresse": {
+                    "type": "object",
+                    "properties": {
+                      "plz": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "strasse": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "hausnummer": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "ort": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "land": {
+                        "type": "string",
+                        "pattern": "^[A-Z]{2}$"
+                      }
+                    },
+                    "required": [
+                      "plz",
+                      "strasse",
+                      "hausnummer",
+                      "ort",
+                      "land"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "ist_selbst_wirtschaftlich_berechtigt": {
+                    "type": "string",
+                    "enum": [
+                      "Ja",
+                      "Nein"
+                    ]
+                  },
+                  "auslandswohnsitz": {
+                    "type": "string",
+                    "enum": [
+                      "Ja",
+                      "Nein"
+                    ]
+                  },
+                  "auslandsadressen": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "plz": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "strasse": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "hausnummer": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "ort": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "land": {
+                          "type": "string",
+                          "pattern": "^[A-Z]{2}$"
+                        }
+                      },
+                      "required": [
+                        "plz",
+                        "strasse",
+                        "hausnummer",
+                        "ort",
+                        "land"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "vorname",
+                  "nachname",
+                  "geburtsdatum",
+                  "staatsangehoerigkeiten",
+                  "adresse",
+                  "ist_selbst_wirtschaftlich_berechtigt",
+                  "auslandswohnsitz",
+                  "auslandsadressen"
+                ],
+                "additionalProperties": false
+              },
+              "beschaeftigung": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "enum": [
+                      "angestellt",
+                      "selbststaendig",
+                      "ruhestand",
+                      "oeffentliche_funktion"
+                    ]
+                  },
+                  "beruf": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "nettoeinkommen_monat_eur_laut_kunde": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "arbeitgeber": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "plz": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "strasse": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "hausnummer": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "ort": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "land": {
+                            "type": "string",
+                            "pattern": "^[A-Z]{2}$"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "plz",
+                          "strasse",
+                          "hausnummer",
+                          "ort",
+                          "land"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "beruf",
+                  "nettoeinkommen_monat_eur_laut_kunde",
+                  "arbeitgeber"
+                ],
+                "additionalProperties": false
+              },
+              "entstehung_gesamtvermoegen_freitext": {
+                "type": "string",
+                "minLength": 1
+              },
+              "mittelherkunft": {
+                "type": "object",
+                "properties": {
+                  "kategorie": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "beschreibung_freitext": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "geplante_ersteinzahlung_eur": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "kategorie",
+                  "beschreibung_freitext",
+                  "geplante_ersteinzahlung_eur"
+                ],
+                "additionalProperties": false
+              },
+              "steuerangaben": {
+                "type": "object",
+                "properties": {
+                  "us_steuerpflicht_laut_selbstauskunft": {
+                    "type": "string",
+                    "enum": [
+                      "Ja",
+                      "Nein"
+                    ]
+                  },
+                  "fatca_us_person_laut_selbstauskunft": {
+                    "type": "string",
+                    "enum": [
+                      "Ja",
+                      "Nein"
+                    ]
+                  },
+                  "steuerliche_ansaessigkeit_laut_selbstauskunft": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1
+                  },
+                  "erlaeuterung_freitext": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "selbstauskunft_vorhanden": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "us_steuerpflicht_laut_selbstauskunft",
+                  "fatca_us_person_laut_selbstauskunft",
+                  "steuerliche_ansaessigkeit_laut_selbstauskunft",
+                  "erlaeuterung_freitext",
+                  "selbstauskunft_vorhanden"
+                ],
+                "additionalProperties": false
+              },
+              "screening": {
+                "type": "object",
+                "properties": {
+                  "pep": {
+                    "type": "string",
+                    "enum": [
+                      "Ja",
+                      "Nein"
+                    ]
+                  },
+                  "pep_erlaeuterung": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sanktionsscreening_status": {
+                    "enum": [
+                      "kein_treffer",
+                      "moeglicher_treffer_ungeklaert"
+                    ]
+                  },
+                  "screening_erlaeuterung": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "pep",
+                  "pep_erlaeuterung",
+                  "sanktionsscreening_status",
+                  "screening_erlaeuterung"
+                ],
+                "additionalProperties": false
+              },
+              "kontoantrag": {
+                "type": "object",
+                "properties": {
+                  "kontotyp": {
+                    "const": "Privatkonto"
+                  },
+                  "kontozweck": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "geplante_nutzung_freitext": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "kontotyp",
+                  "kontozweck",
+                  "geplante_nutzung_freitext"
+                ],
+                "additionalProperties": false
+              },
+              "eingereichte_unterlagen": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "dokument_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "typ": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "textauszug": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "dokument_id",
+                    "typ",
+                    "textauszug"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "regelpruefung": {
+                "type": "object",
+                "properties": {
+                  "ergebnis": {
+                    "enum": [
+                      "Gruen",
+                      "Pruefbedarf"
+                    ]
+                  },
+                  "ausgeloeste_regeln": {
+                    "type": "array",
+                    "items": {
+                      "enum": [
+                        "R1",
+                        "R2",
+                        "R3"
+                      ]
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "ergebnis",
+                  "ausgeloeste_regeln"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "prozessphase",
+              "identitaetspruefung",
+              "kunde",
+              "beschaeftigung",
+              "entstehung_gesamtvermoegen_freitext",
+              "mittelherkunft",
+              "steuerangaben",
+              "screening",
+              "kontoantrag",
+              "eingereichte_unterlagen",
+              "regelpruefung"
+            ],
+            "additionalProperties": false
+          },
+          "sollbewertung": {
+            "type": "object",
+            "properties": {
+              "manuelle_pruefung_erforderlich": {
+                "type": "boolean"
+              },
+              "entscheidung": {
+                "enum": [
+                  "manuelle_pruefung",
+                  "keine_manuelle_pruefung",
+                  "unklar"
+                ]
+              },
+              "begruendung": {
+                "type": "string",
+                "minLength": 1
+              },
+              "belege": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "feld": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "wert": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 1
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "feld",
+                    "wert"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 1
+              },
+              "offene_fragen": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "manuelle_pruefung_erforderlich",
+              "entscheidung",
+              "begruendung",
+              "belege",
+              "offene_fragen"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "kunden_id",
+          "metadaten",
+          "eingabe",
+          "sollbewertung"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 5000,
+      "maxItems": 6000
+    }
+  },
+  "required": [
+    "metadaten",
+    "demo_richtlinie",
+    "kunden"
+  ],
+  "additionalProperties": false
+}

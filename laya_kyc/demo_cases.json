@@ -1,0 +1,1165 @@
+{
+  "kunden": [
+    {
+      "kunden_id": "K01",
+      "expected_path": "LLM → Freigabe",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Erika",
+          "nachname": "Muster",
+          "geburtsdatum": "1988-04-12",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "30159",
+            "strasse": "Musterweg",
+            "hausnummer": "12",
+            "ort": "Hannover",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Nein",
+          "auslandsadressen": []
+        },
+        "beschaeftigung": {
+          "status": "angestellt",
+          "beruf": "Ingenieurin",
+          "nettoeinkommen_monat_eur_laut_kunde": 3200,
+          "arbeitgeber": {
+            "name": "Beispielmaschinenbau GmbH",
+            "plz": "30179",
+            "strasse": "Werkstraße",
+            "hausnummer": "50",
+            "ort": "Hannover",
+            "land": "DE"
+          }
+        },
+        "entstehung_gesamtvermoegen_freitext": "Mein Vermögen entstand aus regelmäßigen Ersparnissen aus meinem Gehalt als Ingenieurin. Einen Teil lege ich seit 2015 in Fonds an.",
+        "mittelherkunft": {
+          "kategorie": "Gehaltsersparnisse",
+          "beschreibung_freitext": "Die vorgesehene Ersteinzahlung von 3.000 EUR stammt aus meinen Gehaltsersparnissen.",
+          "geplante_ersteinzahlung_eur": 3000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE"
+          ],
+          "erlaeuterung_freitext": "Ich gebe Deutschland als steuerliche Ansässigkeit an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "kein_treffer",
+          "screening_erlaeuterung": "Kein Treffer im synthetischen Screening."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Auf das Konto soll mein Gehalt eingehen; davon bezahle ich Miete, Einkäufe und Versicherungen."
+        },
+        "eingereichte_unterlagen": [
+          {
+            "dokument_id": "DOC-01",
+            "typ": "Arbeitgeberbestaetigung",
+            "textauszug": "Arbeitgeber: Beispielmaschinenbau GmbH. Beschäftigungsverhältnis besteht. Das vom Kunden angegebene Nettoeinkommen beträgt 3.200 EUR monatlich."
+          }
+        ],
+        "regelpruefung": {
+          "ergebnis": "Gruen",
+          "ausgeloeste_regeln": []
+        }
+      }
+    },
+    {
+      "kunden_id": "K02",
+      "expected_path": "LLM → Freigabe",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Thomas",
+          "nachname": "Beispiel",
+          "geburtsdatum": "1976-09-23",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "50667",
+            "strasse": "Beispielstraße",
+            "hausnummer": "8",
+            "ort": "Köln",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Ja",
+          "auslandsadressen": [
+            {
+              "plz": "8001",
+              "strasse": "Musterstrasse",
+              "hausnummer": "14",
+              "ort": "Zürich",
+              "land": "CH"
+            }
+          ]
+        },
+        "beschaeftigung": {
+          "status": "angestellt",
+          "beruf": "Lehrer",
+          "nettoeinkommen_monat_eur_laut_kunde": 3400,
+          "arbeitgeber": {
+            "name": "Beispielschule West gGmbH",
+            "plz": "50931",
+            "strasse": "Schulstraße",
+            "hausnummer": "3",
+            "ort": "Köln",
+            "land": "DE"
+          }
+        },
+        "entstehung_gesamtvermoegen_freitext": "Ich habe über viele Jahre einen Teil meines Lehrergehalts gespart. Der Erlös aus dem Verkauf meines privaten Fahrzeugs kommt jetzt hinzu.",
+        "mittelherkunft": {
+          "kategorie": "Fahrzeugverkauf",
+          "beschreibung_freitext": "Die vorgesehene Ersteinzahlung von 18.000 EUR stammt aus dem Verkauf meines privaten Fahrzeugs.",
+          "geplante_ersteinzahlung_eur": 18000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE",
+            "CH"
+          ],
+          "erlaeuterung_freitext": "Ich habe neben meiner deutschen Anschrift einen weiteren Wohnsitz in Zürich, CH. In der steuerlichen Selbstauskunft gebe ich DE und CH an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "kein_treffer",
+          "screening_erlaeuterung": "Kein Treffer im synthetischen Screening."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Ich möchte mit dem Konto meine Miete und Einkäufe bezahlen und private Rücklagen bilden."
+        },
+        "eingereichte_unterlagen": [
+          {
+            "dokument_id": "DOC-01",
+            "typ": "Kaufvertrag",
+            "textauszug": "Verkäufer/in: Thomas Beispiel. Gegenstand: privates Fahrzeug. Kaufpreis: 18.000 EUR. Der Auszug beschreibt den vereinbarten Verkauf; er enthält keinen Nachweis eines Kontovorgangs."
+          }
+        ],
+        "regelpruefung": {
+          "ergebnis": "Gruen",
+          "ausgeloeste_regeln": []
+        }
+      }
+    },
+    {
+      "kunden_id": "K03",
+      "expected_path": "LLM → manuelle Prüfung",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Laura",
+          "nachname": "Muster",
+          "geburtsdatum": "1993-02-07",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "20095",
+            "strasse": "Testallee",
+            "hausnummer": "23a",
+            "ort": "Hamburg",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Nein",
+          "auslandsadressen": []
+        },
+        "beschaeftigung": {
+          "status": "selbststaendig",
+          "beruf": "Designerin",
+          "nettoeinkommen_monat_eur_laut_kunde": 2800,
+          "arbeitgeber": null
+        },
+        "entstehung_gesamtvermoegen_freitext": "Meine Ersparnisse stammen aus Designaufträgen seit 2018. Ich lege einen Teil meiner Einnahmen nach Steuern und Ausgaben zurück.",
+        "mittelherkunft": {
+          "kategorie": "Ruecklagen_aus_Selbststaendigkeit",
+          "beschreibung_freitext": "Die geplanten 6.000 EUR sind persönliche Rücklagen nach Steuern und betrieblichen Kosten aus meiner selbstständigen Tätigkeit.",
+          "geplante_ersteinzahlung_eur": 6000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE"
+          ],
+          "erlaeuterung_freitext": "Ich gebe Deutschland als steuerliche Ansässigkeit an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "kein_treffer",
+          "screening_erlaeuterung": "Kein Treffer im synthetischen Screening."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Über das Konto sollen meine persönlichen Ausgaben laufen; Geld für meinen Betrieb bleibt auf dem Geschäftskonto."
+        },
+        "eingereichte_unterlagen": [
+          {
+            "dokument_id": "DOC-01",
+            "typ": "Finanzierungsvereinbarung",
+            "textauszug": "Vereinbarung für Laura Muster: Darlehen von einer dritten Person über 6.000 EUR. Vorgesehene Verwendung: Ersteinzahlung auf das beantragte Konto. Der Betrag ist zurückzuzahlen."
+          }
+        ],
+        "regelpruefung": {
+          "ergebnis": "Gruen",
+          "ausgeloeste_regeln": []
+        }
+      }
+    },
+    {
+      "kunden_id": "K04",
+      "expected_path": "Prüfbedarf (R1) → LLM → manuelle Prüfung",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Jan",
+          "nachname": "Beispiel",
+          "geburtsdatum": "1990-11-18",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "04109",
+            "strasse": "Musterstraße",
+            "hausnummer": "4",
+            "ort": "Leipzig",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Nein",
+          "auslandswohnsitz": "Nein",
+          "auslandsadressen": []
+        },
+        "beschaeftigung": {
+          "status": "angestellt",
+          "beruf": "Techniker",
+          "nettoeinkommen_monat_eur_laut_kunde": 2700,
+          "arbeitgeber": {
+            "name": "Beispieltechnik Mitte GmbH",
+            "plz": "04129",
+            "strasse": "Werkstattstraße",
+            "hausnummer": "10",
+            "ort": "Leipzig",
+            "land": "DE"
+          }
+        },
+        "entstehung_gesamtvermoegen_freitext": "Ich habe mein Vermögen durch Ersparnisse aus meinem Technikergehalt aufgebaut. Größere Erbschaften oder Schenkungen habe ich nicht erhalten.",
+        "mittelherkunft": {
+          "kategorie": "Gehaltsersparnisse",
+          "beschreibung_freitext": "Die vorgesehene Ersteinzahlung von 2.000 EUR stammt aus meinen Gehaltsersparnissen.",
+          "geplante_ersteinzahlung_eur": 2000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE"
+          ],
+          "erlaeuterung_freitext": "Ich gebe Deutschland als steuerliche Ansässigkeit an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "kein_treffer",
+          "screening_erlaeuterung": "Kein Treffer im synthetischen Screening."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Ich möchte mit dem Konto meine Miete und Einkäufe bezahlen und private Rücklagen bilden."
+        },
+        "eingereichte_unterlagen": [],
+        "regelpruefung": {
+          "ergebnis": "Pruefbedarf",
+          "ausgeloeste_regeln": [
+            "R1"
+          ]
+        }
+      }
+    },
+    {
+      "kunden_id": "K05",
+      "expected_path": "LLM → Freigabe",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Claudia",
+          "nachname": "Muster",
+          "geburtsdatum": "1965-06-30",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "28195",
+            "strasse": "Beispielweg",
+            "hausnummer": "9",
+            "ort": "Bremen",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Nein",
+          "auslandsadressen": []
+        },
+        "beschaeftigung": {
+          "status": "ruhestand",
+          "beruf": "Rentnerin",
+          "nettoeinkommen_monat_eur_laut_kunde": 2100,
+          "arbeitgeber": null
+        },
+        "entstehung_gesamtvermoegen_freitext": "Mein Vermögen entstand aus früheren Gehaltsersparnissen und einer Erbschaft meiner Eltern. Heute erhalte ich außerdem eine Rente.",
+        "mittelherkunft": {
+          "kategorie": "Erbschaft",
+          "beschreibung_freitext": "Ich möchte 60.000 EUR aus einer Erbschaft auf das neue Konto einbringen.",
+          "geplante_ersteinzahlung_eur": 60000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE"
+          ],
+          "erlaeuterung_freitext": "Ich gebe Deutschland als steuerliche Ansässigkeit an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "kein_treffer",
+          "screening_erlaeuterung": "Kein Treffer im synthetischen Screening."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Ich möchte mit dem Konto meine Miete und Einkäufe bezahlen und private Rücklagen bilden."
+        },
+        "eingereichte_unterlagen": [
+          {
+            "dokument_id": "DOC-01",
+            "typ": "Nachlassunterlage",
+            "textauszug": "Begünstigte Person: Claudia Muster. In der synthetischen Nachlassunterlage ausgewiesener Geldanteil: 60.000 EUR."
+          }
+        ],
+        "regelpruefung": {
+          "ergebnis": "Gruen",
+          "ausgeloeste_regeln": []
+        }
+      }
+    },
+    {
+      "kunden_id": "K06",
+      "expected_path": "Prüfbedarf (R4) → LLM → manuelle Prüfung",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Felix",
+          "nachname": "Beispiel",
+          "geburtsdatum": "1985-08-09",
+          "staatsangehoerigkeiten": [
+            "DE",
+            "US"
+          ],
+          "adresse": {
+            "plz": "70173",
+            "strasse": "Teststraße",
+            "hausnummer": "18",
+            "ort": "Stuttgart",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Ja",
+          "auslandsadressen": [
+            {
+              "plz": "98101",
+              "strasse": "Example Street",
+              "hausnummer": "100",
+              "ort": "Seattle",
+              "land": "US"
+            }
+          ]
+        },
+        "beschaeftigung": {
+          "status": "angestellt",
+          "beruf": "Softwareentwickler",
+          "nettoeinkommen_monat_eur_laut_kunde": 4600,
+          "arbeitgeber": {
+            "name": "Beispielsoftware Süd GmbH",
+            "plz": "70563",
+            "strasse": "Technologieallee",
+            "hausnummer": "7",
+            "ort": "Stuttgart",
+            "land": "DE"
+          }
+        },
+        "entstehung_gesamtvermoegen_freitext": "Ich spare seit Beginn meiner Tätigkeit als Softwareentwickler einen Teil meines Gehalts. Mein Vermögen besteht überwiegend aus diesen Ersparnissen und Fondsanlagen.",
+        "mittelherkunft": {
+          "kategorie": "Gehaltsersparnisse",
+          "beschreibung_freitext": "Die vorgesehene Ersteinzahlung von 10.000 EUR stammt aus meinen Gehaltsersparnissen.",
+          "geplante_ersteinzahlung_eur": 10000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Ja",
+          "fatca_us_person_laut_selbstauskunft": "Ja",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE",
+            "US"
+          ],
+          "erlaeuterung_freitext": "Ich habe die deutsche und die US-Staatsangehörigkeit, einen weiteren Wohnsitz in Seattle und gebe meinen US-Status in der Selbstauskunft an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "kein_treffer",
+          "screening_erlaeuterung": "Kein Treffer im synthetischen Screening."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Ich möchte mit dem Konto meine Miete und Einkäufe bezahlen und private Rücklagen bilden."
+        },
+        "eingereichte_unterlagen": [
+          {
+            "dokument_id": "DOC-01",
+            "typ": "Arbeitgeberbestaetigung",
+            "textauszug": "Arbeitgeber: Beispielsoftware Süd GmbH. Beschäftigungsverhältnis besteht. Das vom Kunden angegebene Nettoeinkommen beträgt 4.600 EUR monatlich."
+          }
+        ],
+        "regelpruefung": {
+          "ergebnis": "Gruen",
+          "ausgeloeste_regeln": []
+        }
+      }
+    },
+    {
+      "kunden_id": "K07",
+      "expected_path": "Prüfbedarf (R2) → LLM → manuelle Prüfung",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Lea",
+          "nachname": "Muster",
+          "geburtsdatum": "1972-03-14",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "10115",
+            "strasse": "Musterallee",
+            "hausnummer": "15",
+            "ort": "Berlin",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Nein",
+          "auslandsadressen": []
+        },
+        "beschaeftigung": {
+          "status": "oeffentliche_funktion",
+          "beruf": "Hochrangige öffentliche Funktion",
+          "nettoeinkommen_monat_eur_laut_kunde": 7800,
+          "arbeitgeber": {
+            "name": "Beispielverwaltung Bund",
+            "plz": "10117",
+            "strasse": "Verwaltungsstraße",
+            "hausnummer": "1",
+            "ort": "Berlin",
+            "land": "DE"
+          }
+        },
+        "entstehung_gesamtvermoegen_freitext": "Mein Vermögen stammt aus früherer Berufstätigkeit, laufenden Bezügen und einer geerbten Wohnung. Es wurde über mehrere Jahre aufgebaut.",
+        "mittelherkunft": {
+          "kategorie": "Gehaltsersparnisse",
+          "beschreibung_freitext": "Die vorgesehene Ersteinzahlung von 5.000 EUR stammt aus meinen Ersparnissen aus Bezügen.",
+          "geplante_ersteinzahlung_eur": 5000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE"
+          ],
+          "erlaeuterung_freitext": "Ich gebe Deutschland als steuerliche Ansässigkeit an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Ja",
+          "pep_erlaeuterung": "Bestätigter PEP-Befund im vollständig synthetischen Screening: hochrangige öffentliche Funktion, Referenz PEP-SYN-K07.",
+          "sanktionsscreening_status": "kein_treffer",
+          "screening_erlaeuterung": "Kein Treffer im synthetischen Screening."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Ich möchte mit dem Konto meine Miete und Einkäufe bezahlen und private Rücklagen bilden."
+        },
+        "eingereichte_unterlagen": [],
+        "regelpruefung": {
+          "ergebnis": "Pruefbedarf",
+          "ausgeloeste_regeln": [
+            "R2"
+          ]
+        }
+      }
+    },
+    {
+      "kunden_id": "K08",
+      "expected_path": "LLM → Freigabe",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Paul",
+          "nachname": "Beispiel",
+          "geburtsdatum": "1998-01-25",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "01067",
+            "strasse": "Beispielgasse",
+            "hausnummer": "5",
+            "ort": "Dresden",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Nein",
+          "auslandsadressen": []
+        },
+        "beschaeftigung": {
+          "status": "angestellt",
+          "beruf": "Pflegefachkraft",
+          "nettoeinkommen_monat_eur_laut_kunde": 2600,
+          "arbeitgeber": {
+            "name": "Beispielpflege Elbe gGmbH",
+            "plz": "01307",
+            "strasse": "Klinikstraße",
+            "hausnummer": "22",
+            "ort": "Dresden",
+            "land": "DE"
+          }
+        },
+        "entstehung_gesamtvermoegen_freitext": "Meine Rücklagen stammen aus meinem Gehalt als Pflegefachkraft. Ich habe monatlich kleine Beträge gespart.",
+        "mittelherkunft": {
+          "kategorie": "Gehaltsersparnisse",
+          "beschreibung_freitext": "Die vorgesehene Ersteinzahlung von 1.500 EUR stammt aus meinen Gehaltsersparnissen.",
+          "geplante_ersteinzahlung_eur": 1500
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE"
+          ],
+          "erlaeuterung_freitext": "Ich gebe Deutschland als steuerliche Ansässigkeit an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "kein_treffer",
+          "screening_erlaeuterung": "Kein Treffer im synthetischen Screening."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Auf das Konto soll mein Gehalt eingehen; davon bezahle ich Miete, Einkäufe und Versicherungen."
+        },
+        "eingereichte_unterlagen": [],
+        "regelpruefung": {
+          "ergebnis": "Gruen",
+          "ausgeloeste_regeln": []
+        }
+      }
+    },
+    {
+      "kunden_id": "K09",
+      "expected_path": "Prüfbedarf (R3) → LLM → manuelle Prüfung",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Nora",
+          "nachname": "Muster",
+          "geburtsdatum": "1981-12-02",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "60311",
+            "strasse": "Testweg",
+            "hausnummer": "20",
+            "ort": "Frankfurt",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Nein",
+          "auslandsadressen": []
+        },
+        "beschaeftigung": {
+          "status": "angestellt",
+          "beruf": "Projektleiterin",
+          "nettoeinkommen_monat_eur_laut_kunde": 4100,
+          "arbeitgeber": {
+            "name": "Beispielprojekt Main GmbH",
+            "plz": "60327",
+            "strasse": "Projektstraße",
+            "hausnummer": "14",
+            "ort": "Frankfurt",
+            "land": "DE"
+          }
+        },
+        "entstehung_gesamtvermoegen_freitext": "Ich habe mein Vermögen aus meinem Gehalt als Projektleiterin und Erträgen langfristiger Anlagen aufgebaut.",
+        "mittelherkunft": {
+          "kategorie": "Gehaltsersparnisse",
+          "beschreibung_freitext": "Die vorgesehene Ersteinzahlung von 4.000 EUR stammt aus meinen Gehaltsersparnissen.",
+          "geplante_ersteinzahlung_eur": 4000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE"
+          ],
+          "erlaeuterung_freitext": "Ich gebe Deutschland als steuerliche Ansässigkeit an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "moeglicher_treffer_ungeklaert",
+          "screening_erlaeuterung": "Möglicher Namensgleichklang mit einem vollständig synthetischen Screening-Referenzdatensatz SCR-SYN-K09. Die Zuordnung ist offen."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Ich möchte mit dem Konto meine Miete und Einkäufe bezahlen und private Rücklagen bilden."
+        },
+        "eingereichte_unterlagen": [],
+        "regelpruefung": {
+          "ergebnis": "Pruefbedarf",
+          "ausgeloeste_regeln": [
+            "R3"
+          ]
+        }
+      }
+    },
+    {
+      "kunden_id": "K10",
+      "expected_path": "LLM unklar → manuelle Prüfung",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "David",
+          "nachname": "Beispiel",
+          "geburtsdatum": "1995-05-16",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "80331",
+            "strasse": "Musterplatz",
+            "hausnummer": "6",
+            "ort": "München",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Nein",
+          "auslandsadressen": []
+        },
+        "beschaeftigung": {
+          "status": "angestellt",
+          "beruf": "Elektriker",
+          "nettoeinkommen_monat_eur_laut_kunde": 2900,
+          "arbeitgeber": {
+            "name": "Beispielelektro Isar GmbH",
+            "plz": "81331",
+            "strasse": "Werkstattweg",
+            "hausnummer": "19",
+            "ort": "München",
+            "land": "DE"
+          }
+        },
+        "entstehung_gesamtvermoegen_freitext": "Mein Vermögen besteht aus Ersparnissen aus meinem Elektrikergehalt und einer Schenkung meiner Eltern. Zur Schenkung habe ich bisher keine Unterlagen eingereicht.",
+        "mittelherkunft": {
+          "kategorie": "Schenkung",
+          "beschreibung_freitext": "Ich plane 15.000 EUR aus einer Schenkung einzubringen. Einen Nachweis habe ich nicht beigefügt.",
+          "geplante_ersteinzahlung_eur": 15000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE"
+          ],
+          "erlaeuterung_freitext": "Ich gebe Deutschland als steuerliche Ansässigkeit an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "kein_treffer",
+          "screening_erlaeuterung": "Kein Treffer im synthetischen Screening."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Ich möchte mit dem Konto meine Miete und Einkäufe bezahlen und private Rücklagen bilden."
+        },
+        "eingereichte_unterlagen": [],
+        "regelpruefung": {
+          "ergebnis": "Gruen",
+          "ausgeloeste_regeln": []
+        }
+      }
+    },
+    {
+      "kunden_id": "K11",
+      "expected_path": "LLM → manuelle Prüfung",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Simon",
+          "nachname": "Muster",
+          "geburtsdatum": "1987-07-21",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "40213",
+            "strasse": "Beispielstraße",
+            "hausnummer": "12",
+            "ort": "Düsseldorf",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Nein",
+          "auslandsadressen": []
+        },
+        "beschaeftigung": {
+          "status": "selbststaendig",
+          "beruf": "Selbstständiger IT-Berater",
+          "nettoeinkommen_monat_eur_laut_kunde": 3100,
+          "arbeitgeber": null
+        },
+        "entstehung_gesamtvermoegen_freitext": "Mein Vermögen wurde aus Überschüssen meiner selbstständigen IT-Beratung aufgebaut. Ich habe nach Abzug der Kosten und Steuern regelmäßig Geld zurückgelegt.",
+        "mittelherkunft": {
+          "kategorie": "Ruecklagen_aus_Selbststaendigkeit",
+          "beschreibung_freitext": "Die geplanten 5.000 EUR sind persönliche Rücklagen nach Steuern und betrieblichen Kosten aus meiner selbstständigen Tätigkeit.",
+          "geplante_ersteinzahlung_eur": 5000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE"
+          ],
+          "erlaeuterung_freitext": "Ich gebe Deutschland als steuerliche Ansässigkeit an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "kein_treffer",
+          "screening_erlaeuterung": "Kein Treffer im synthetischen Screening."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "private Lebenshaltung, Miete und Einkäufe",
+          "geplante_nutzung_freitext": "Auf dieses Konto sollen meine Auftraggeber die Honorare für IT-Projekte überweisen. Ich möchte damit auch die Hostingkosten für meine Kundenprojekte bezahlen. Ich habe ein Privatkonto ausgewählt, weil ich als Einzelunternehmer unter meinem eigenen Namen arbeite."
+        },
+        "eingereichte_unterlagen": [],
+        "regelpruefung": {
+          "ergebnis": "Gruen",
+          "ausgeloeste_regeln": []
+        }
+      }
+    },
+    {
+      "kunden_id": "K12",
+      "expected_path": "LLM → manuelle Prüfung (Wohnadresse Reeperbahn; selbstständig, aber Gehalt und Arbeitgeberbestätigung)",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Tim",
+          "nachname": "Uphaus",
+          "geburtsdatum": "1988-04-12",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "20359",
+            "strasse": "Reeperbahn",
+            "hausnummer": "12",
+            "ort": "Hamburg",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Nein",
+          "auslandsadressen": []
+        },
+        "beschaeftigung": {
+          "status": "selbststaendig",
+          "beruf": "Ingenieurin",
+          "nettoeinkommen_monat_eur_laut_kunde": 3200,
+          "arbeitgeber": null
+        },
+        "entstehung_gesamtvermoegen_freitext": "Mein Vermögen entstand aus regelmäßigen Ersparnissen aus meinem Gehalt als Ingenieurin. Einen Teil lege ich seit 2015 in Fonds an.",
+        "mittelherkunft": {
+          "kategorie": "Gehaltsersparnisse",
+          "beschreibung_freitext": "Die vorgesehene Ersteinzahlung von 3.000 EUR stammt aus meinen Gehaltsersparnissen.",
+          "geplante_ersteinzahlung_eur": 3000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE"
+          ],
+          "erlaeuterung_freitext": "Ich gebe Deutschland als steuerliche Ansässigkeit an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "kein_treffer",
+          "screening_erlaeuterung": "Kein Treffer im synthetischen Screening."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Auf das Konto soll mein Gehalt eingehen; davon bezahle ich Miete, Einkäufe und Versicherungen."
+        },
+        "eingereichte_unterlagen": [
+          {
+            "dokument_id": "DOC-01",
+            "typ": "Arbeitgeberbestaetigung",
+            "textauszug": "Arbeitgeber: Beispielmaschinenbau GmbH. Beschäftigungsverhältnis besteht. Das vom Kunden angegebene Nettoeinkommen beträgt 3.200 EUR monatlich."
+          }
+        ],
+        "regelpruefung": {
+          "ergebnis": "Gruen",
+          "ausgeloeste_regeln": []
+        }
+      }
+    },
+    {
+      "kunden_id": "K13",
+      "expected_path": "LLM → manuelle Prüfung (Wohnadresse Reeperbahn)",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Karl",
+          "nachname": "Jones",
+          "geburtsdatum": "1988-04-12",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "20359",
+            "strasse": "Reeperbahn",
+            "hausnummer": "12",
+            "ort": "Hamburg",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Nein",
+          "auslandsadressen": []
+        },
+        "beschaeftigung": {
+          "status": "angestellt",
+          "beruf": "Ingenieurin",
+          "nettoeinkommen_monat_eur_laut_kunde": 3200,
+          "arbeitgeber": {
+            "name": "Beispielmaschinenbau GmbH",
+            "plz": "20359",
+            "strasse": "Reeperbahn",
+            "hausnummer": "50",
+            "ort": "Hamburg",
+            "land": "DE"
+          }
+        },
+        "entstehung_gesamtvermoegen_freitext": "Mein Vermögen entstand aus regelmäßigen Ersparnissen aus meinem Gehalt als Ingenieurin. Einen Teil lege ich seit 2015 in Fonds an.",
+        "mittelherkunft": {
+          "kategorie": "Gehaltsersparnisse",
+          "beschreibung_freitext": "Die vorgesehene Ersteinzahlung von 3.000 EUR stammt aus meinen Gehaltsersparnissen.",
+          "geplante_ersteinzahlung_eur": 3000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE"
+          ],
+          "erlaeuterung_freitext": "Ich gebe Deutschland als steuerliche Ansässigkeit an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "kein_treffer",
+          "screening_erlaeuterung": "Kein Treffer im synthetischen Screening."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Auf das Konto soll mein Gehalt eingehen; davon bezahle ich Miete, Einkäufe und Versicherungen."
+        },
+        "eingereichte_unterlagen": [
+          {
+            "dokument_id": "DOC-01",
+            "typ": "Arbeitgeberbestaetigung",
+            "textauszug": "Arbeitgeber: Beispielmaschinenbau GmbH. Beschäftigungsverhältnis besteht. Das vom Kunden angegebene Nettoeinkommen beträgt 3.200 EUR monatlich."
+          }
+        ],
+        "regelpruefung": {
+          "ergebnis": "Gruen",
+          "ausgeloeste_regeln": []
+        }
+      }
+    },
+    {
+      "kunden_id": "K14",
+      "expected_path": "LLM → Freigabe (nur der Arbeitgeber sitzt an der Reeperbahn)",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Marcin",
+          "nachname": "Pankowski",
+          "geburtsdatum": "1988-04-12",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "30159",
+            "strasse": "Musterweg",
+            "hausnummer": "12",
+            "ort": "Hannover",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Nein",
+          "auslandsadressen": []
+        },
+        "beschaeftigung": {
+          "status": "angestellt",
+          "beruf": "Ingenieurin",
+          "nettoeinkommen_monat_eur_laut_kunde": 3200,
+          "arbeitgeber": {
+            "name": "Beispielmaschinenbau GmbH",
+            "plz": "20359",
+            "strasse": "Reeperbahn",
+            "hausnummer": "50",
+            "ort": "Hamburg",
+            "land": "DE"
+          }
+        },
+        "entstehung_gesamtvermoegen_freitext": "Mein Vermögen entstand aus regelmäßigen Ersparnissen aus meinem Gehalt als Ingenieurin. Einen Teil lege ich seit 2015 in Fonds an.",
+        "mittelherkunft": {
+          "kategorie": "Gehaltsersparnisse",
+          "beschreibung_freitext": "Die vorgesehene Ersteinzahlung von 3.000 EUR stammt aus meinen Gehaltsersparnissen.",
+          "geplante_ersteinzahlung_eur": 3000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE"
+          ],
+          "erlaeuterung_freitext": "Ich gebe Deutschland als steuerliche Ansässigkeit an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "kein_treffer",
+          "screening_erlaeuterung": "Kein Treffer im synthetischen Screening."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Auf das Konto soll mein Gehalt eingehen; davon bezahle ich Miete, Einkäufe und Versicherungen."
+        },
+        "eingereichte_unterlagen": [
+          {
+            "dokument_id": "DOC-01",
+            "typ": "Arbeitgeberbestaetigung",
+            "textauszug": "Arbeitgeber: Beispielmaschinenbau GmbH. Beschäftigungsverhältnis besteht. Das vom Kunden angegebene Nettoeinkommen beträgt 3.200 EUR monatlich."
+          }
+        ],
+        "regelpruefung": {
+          "ergebnis": "Gruen",
+          "ausgeloeste_regeln": []
+        }
+      }
+    },
+    {
+      "kunden_id": "K15",
+      "expected_path": "Ablehnung durch Regeln (R5), ohne LLM",
+      "eingabe": {
+        "prozessphase": "nach_identifizierung_vor_kontoanlage",
+        "identitaetspruefung": {
+          "status": "erfolgreich_abgeschlossen",
+          "datum": "2026-10-01",
+          "verfahren": "VideoIdent"
+        },
+        "kunde": {
+          "vorname": "Viktor",
+          "nachname": "Beispiel",
+          "geburtsdatum": "1979-10-03",
+          "staatsangehoerigkeiten": [
+            "DE"
+          ],
+          "adresse": {
+            "plz": "30159",
+            "strasse": "Musterweg",
+            "hausnummer": "14",
+            "ort": "Hannover",
+            "land": "DE"
+          },
+          "ist_selbst_wirtschaftlich_berechtigt": "Ja",
+          "auslandswohnsitz": "Nein",
+          "auslandsadressen": []
+        },
+        "beschaeftigung": {
+          "status": "angestellt",
+          "beruf": "Ingenieur",
+          "nettoeinkommen_monat_eur_laut_kunde": 3300,
+          "arbeitgeber": {
+            "name": "Beispielmaschinenbau GmbH",
+            "plz": "30179",
+            "strasse": "Werkstraße",
+            "hausnummer": "50",
+            "ort": "Hannover",
+            "land": "DE"
+          }
+        },
+        "entstehung_gesamtvermoegen_freitext": "Mein Vermögen entstand aus regelmäßigen Ersparnissen aus meinem Gehalt als Ingenieur.",
+        "mittelherkunft": {
+          "kategorie": "Gehaltsersparnisse",
+          "beschreibung_freitext": "Die vorgesehene Ersteinzahlung von 3.000 EUR stammt aus meinen Gehaltsersparnissen.",
+          "geplante_ersteinzahlung_eur": 3000
+        },
+        "steuerangaben": {
+          "us_steuerpflicht_laut_selbstauskunft": "Nein",
+          "fatca_us_person_laut_selbstauskunft": "Nein",
+          "steuerliche_ansaessigkeit_laut_selbstauskunft": [
+            "DE"
+          ],
+          "erlaeuterung_freitext": "Ich gebe Deutschland als steuerliche Ansässigkeit an.",
+          "selbstauskunft_vorhanden": true
+        },
+        "screening": {
+          "pep": "Nein",
+          "pep_erlaeuterung": "Kein PEP-Befund im synthetischen Screening.",
+          "sanktionsscreening_status": "bestaetigter_treffer",
+          "screening_erlaeuterung": "Bestätigter Treffer im vollständig synthetischen Sanktionsscreening: Identität und Geburtsdatum stimmen mit Referenz SAN-SYN-K15 überein."
+        },
+        "kontoantrag": {
+          "kontotyp": "Privatkonto",
+          "kontozweck": "Private Lebenshaltung, Miete und Einkäufe.",
+          "geplante_nutzung_freitext": "Auf das Konto soll mein Gehalt eingehen; davon bezahle ich Miete, Einkäufe und Versicherungen."
+        },
+        "eingereichte_unterlagen": [
+          {
+            "dokument_id": "DOC-01",
+            "typ": "Arbeitgeberbestaetigung",
+            "textauszug": "Arbeitgeber: Beispielmaschinenbau GmbH. Beschäftigungsverhältnis besteht. Das vom Kunden angegebene Nettoeinkommen beträgt 3.300 EUR monatlich."
+          }
+        ],
+        "regelpruefung": {
+          "ergebnis": "Gruen",
+          "ausgeloeste_regeln": []
+        }
+      }
+    }
+  ]
+}

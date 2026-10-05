@@ -1,0 +1,31 @@
+{
+  "name": "v2_nur_daten_epoche1",
+  "modell": "../modelle/laya-kyc-v2-epoche1",
+  "gegenproben": {
+    "Wohnadresse ins Reeperbahn-Umfeld verlegt (Soll: manuell)": {
+      "faelle": 250,
+      "wie_erwartet": 11,
+      "quote": 0.044
+    },
+    "Nur Arbeitgeber ins Reeperbahn-Umfeld verlegt (Soll: keine)": {
+      "faelle": 185,
+      "wie_erwartet": 183,
+      "quote": 0.989
+    },
+    "Adressfall an unauffällige Wohnadresse verlegt (Soll: keine)": {
+      "faelle": 15,
+      "wie_erwartet": 15,
+      "quote": 1.0
+    },
+    "Unveränderte unauffällige Fälle (Soll: keine)": {
+      "faelle": 250,
+      "wie_erwartet": 244,
+      "quote": 0.976
+    },
+    "Unveränderte Adressfälle (Soll: manuell)": {
+      "faelle": 5,
+      "wie_erwartet": 0,
+      "quote": 0.0
+    }
+  }
+}

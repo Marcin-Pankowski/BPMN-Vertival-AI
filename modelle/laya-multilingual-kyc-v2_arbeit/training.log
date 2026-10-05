@@ -1,0 +1,53 @@
+00:24:51 Device mps; train 4781, validation 598; micro_batch 4, grad_accum 8, epochen 2, nur_kopf False
+00:25:44 Validation vor Training: {'nll': 0.9024, 'genauigkeit_3_klassen': 0.8746, 'faelschlich_freigegeben': 69, 'unnoetig_manuell': 6}
+00:27:12 Epoche 1: 4%, CE 1.3287, 1.5 min seit Start
+00:28:39 Epoche 1: 8%, CE 0.8911, 2.9 min seit Start
+00:30:01 Epoche 1: 13%, CE 0.7104, 4.3 min seit Start
+00:31:21 Epoche 1: 17%, CE 0.6272, 5.6 min seit Start
+00:32:43 Epoche 1: 21%, CE 0.5579, 7.0 min seit Start
+00:34:04 Epoche 1: 25%, CE 0.5169, 8.3 min seit Start
+00:35:24 Epoche 1: 29%, CE 0.4994, 9.7 min seit Start
+00:36:45 Epoche 1: 33%, CE 0.4686, 11.0 min seit Start
+00:38:06 Epoche 1: 38%, CE 0.4528, 12.4 min seit Start
+00:39:26 Epoche 1: 42%, CE 0.4382, 13.7 min seit Start
+00:40:46 Epoche 1: 46%, CE 0.4258, 15.0 min seit Start
+00:42:06 Epoche 1: 50%, CE 0.4154, 16.4 min seit Start
+00:43:27 Epoche 1: 54%, CE 0.4026, 17.7 min seit Start
+00:44:48 Epoche 1: 59%, CE 0.3952, 19.1 min seit Start
+00:46:08 Epoche 1: 63%, CE 0.3838, 20.4 min seit Start
+00:47:28 Epoche 1: 67%, CE 0.3772, 21.7 min seit Start
+00:48:49 Epoche 1: 71%, CE 0.3669, 23.1 min seit Start
+00:50:09 Epoche 1: 75%, CE 0.3606, 24.4 min seit Start
+00:51:29 Epoche 1: 79%, CE 0.3539, 25.8 min seit Start
+00:52:50 Epoche 1: 84%, CE 0.3463, 27.1 min seit Start
+00:54:11 Epoche 1: 88%, CE 0.3375, 28.4 min seit Start
+00:55:31 Epoche 1: 92%, CE 0.3288, 29.8 min seit Start
+00:56:51 Epoche 1: 96%, CE 0.3193, 31.1 min seit Start
+00:58:50 Epoche 1 fertig: train CE 0.3114; validation {'nll': 0.1251, 'genauigkeit_3_klassen': 0.9632, 'faelschlich_freigegeben': 9, 'unnoetig_manuell': 13}
+00:58:51   -> bester Checkpoint (Epoche 1)
+01:00:11 Epoche 2: 4%, CE 0.0647, 34.5 min seit Start
+01:01:32 Epoche 2: 8%, CE 0.0629, 35.8 min seit Start
+01:02:52 Epoche 2: 13%, CE 0.1147, 37.1 min seit Start
+01:04:13 Epoche 2: 17%, CE 0.1160, 38.5 min seit Start
+01:05:34 Epoche 2: 21%, CE 0.1081, 39.8 min seit Start
+01:06:54 Epoche 2: 25%, CE 0.0983, 41.2 min seit Start
+01:08:15 Epoche 2: 29%, CE 0.0899, 42.5 min seit Start
+01:09:37 Epoche 2: 33%, CE 0.0816, 43.9 min seit Start
+01:10:57 Epoche 2: 38%, CE 0.0731, 45.2 min seit Start
+01:12:19 Epoche 2: 42%, CE 0.0658, 46.6 min seit Start
+01:13:42 Epoche 2: 46%, CE 0.0600, 48.0 min seit Start
+01:15:05 Epoche 2: 50%, CE 0.0571, 49.4 min seit Start
+01:16:27 Epoche 2: 54%, CE 0.0527, 50.7 min seit Start
+01:17:49 Epoche 2: 59%, CE 0.0490, 52.1 min seit Start
+01:19:10 Epoche 2: 63%, CE 0.0457, 53.4 min seit Start
+01:20:33 Epoche 2: 67%, CE 0.0429, 54.8 min seit Start
+01:21:55 Epoche 2: 71%, CE 0.0404, 56.2 min seit Start
+01:23:16 Epoche 2: 75%, CE 0.0381, 57.5 min seit Start
+01:24:38 Epoche 2: 79%, CE 0.0361, 58.9 min seit Start
+01:26:01 Epoche 2: 84%, CE 0.0343, 60.3 min seit Start
+01:27:25 Epoche 2: 88%, CE 0.0327, 61.7 min seit Start
+01:28:47 Epoche 2: 92%, CE 0.0312, 63.1 min seit Start
+01:30:08 Epoche 2: 96%, CE 0.0299, 64.4 min seit Start
+01:32:09 Epoche 2 fertig: train CE 0.0287; validation {'nll': 0.0, 'genauigkeit_3_klassen': 1.0, 'faelschlich_freigegeben': 0, 'unnoetig_manuell': 0}
+01:32:10   -> bester Checkpoint (Epoche 2)
+01:32:57 Fertig nach 66.4 min. Beste Epoche 2, Temperatur 0.995. Modell: ../modelle/laya-multilingual-kyc-v2

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KYC-Prüfprozess</title>
+  <link rel="stylesheet" href="vendor/bpmn-js/diagram-js.css">
+  <link rel="stylesheet" href="vendor/bpmn-js/bpmn-js.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <div class="brand-title">KYC-Prüfprozess</div>
+        <div class="brand-sub">Regeln (DMN) · Laya · manuelle Prüfung — Kogito 10.2</div>
+      </div>
+    </div>
+    <nav class="tabs" aria-label="Bereiche">
+      <a href="#check" data-view="check">Antrag prüfen</a>
+      <a href="#review" data-view="review">Manuelle Prüfung <span id="review-count" class="count" hidden></span></a>
+      <a href="#dashboard" data-view="dashboard">Dashboard</a>
+    </nav>
+    <div class="services">
+      <span class="service" id="status-kogito"><i></i>Kogito</span>
+      <span class="service" id="status-laya"><i></i>Laya</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- Antrag prüfen -->
+    <section id="view-check" class="view" hidden>
+      <div class="check-layout">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Antrag</h2>
+            <div class="row gap">
+              <label class="inline">Vorlage
+                <select id="case-select"></select>
+              </label>
+              <button class="ghost" id="toggle-json" type="button">JSON</button>
+            </div>
+          </div>
+          <p class="hint" id="case-hint"></p>
+          <form id="application-form" autocomplete="off"></form>
+          <div id="json-editor" hidden>
+            <textarea id="json-text" spellcheck="false"></textarea>
+            <div class="row gap end">
+              <span class="error" id="json-error"></span>
+              <button class="ghost" id="json-apply" type="button">Übernehmen</button>
+            </div>
+          </div>
+          <div class="panel-foot">
+            <span class="hint">Das Regelergebnis (<code>regelpruefung</code>) berechnet der Prozess selbst.</span>
+            <button class="primary" id="start-button" type="button">Prüfung starten</button>
+          </div>
+        </div>
+        <aside class="panel result-panel" id="check-result">
+          <div class="empty">
+            <h2>Ergebnis</h2>
+            <p>Vorlage wählen oder Angaben ändern, dann „Prüfung starten“. Der Prozess wertet zuerst die Regeln R1–R3 (DMN) aus, dann bewertet Laya den Antrag.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Manuelle Prüfung -->
+    <section id="view-review" class="view" hidden>
+      <div class="review-layout">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Offene Prüfungen</h2>
+            <label class="inline">Prüfer/in <input id="reviewer" value="anna" size="10"></label>
+          </div>
+          <p class="hint">Gruppe <code>kyc-reviewers</code></p>
+          <ul class="task-list" id="task-list"></ul>
+        </div>
+        <div class="panel" id="task-detail">
+          <div class="empty"><h2>Prüfung</h2><p>Links eine offene Prüfung auswählen.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="view-dashboard" class="view" hidden>
+      <div class="kpis" id="kpis"></div>
+      <div class="dashboard-layout">
+        <div class="panel instances-panel">
+          <div class="panel-head">
+            <h2>Instanzen</h2>
+            <div class="row gap">
+              <select id="instance-filter" aria-label="Filter">
+                <option value="all">alle</option>
+                <option value="active">aktiv</option>
+                <option value="completed">abgeschlossen</option>
+              </select>
+              <button class="ghost" id="clear-history" type="button" title="Protokoll leeren">Leeren</button>
+            </div>
+          </div>
+          <ul class="instance-list" id="instance-list"></ul>
+        </div>
+        <div class="detail-column">
+          <div class="panel diagram-panel">
+            <div class="panel-head">
+              <h2 id="instance-title">Prozessablauf</h2>
+              <div class="legend">
+                <span><i class="lg visited"></i>durchlaufen</span>
+                <span><i class="lg current"></i>wartet</span>
+                <span><i class="lg dimmed"></i>nicht erreicht</span>
+              </div>
+            </div>
+            <div id="canvas"></div>
+          </div>
+          <div class="cards" id="instance-cards"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="vendor/bpmn-js/bpmn-navigated-viewer.production.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_KYC" targetNamespace="https://example.org/kyc/planning" exporter="Codex">
+  <bpmn:process id="Process_KYC" name="KYC-Prüfung: Regeln, LLM und manuelle Prüfung" isExecutable="false">
+    <bpmn:documentation>Fachlicher Planungsentwurf. Eingangsvoraussetzung: Die Identitätsprüfung des Kunden ist erfolgreich abgeschlossen. Der Prozess verwendet ausschließlich KYC-Daten nach dieser Prüfung; die Identitätsprüfung selbst liegt vor dem Prozess. Die Demo-Regeln R1–R4 markieren die Kundenangabe „selbst wirtschaftlich berechtigt: Nein“, bestätigten PEP-Status, ungeklärte Screening-Treffer oder USA-Bezug für manuelle Prüfung; R5 (bestätigter Sanktionstreffer) führt direkt zur Ablehnung. Auch bei grünem Regelergebnis folgt die LLM-Prüfung. Automatische Freigabe ist nur bei grünem Regelergebnis und eindeutig fehlendem manuellem Prüfbedarf zulässig. Offene Regelbefunde führen nach der LLM-Prüfung zur manuellen Prüfung. Die ausführbare Fassung liegt in kyc-prozess/src/main/resources/KYC_Pruefprozess.bpmn. Alle Fälle werden vor der Kontoanlage anhand von Antragsdaten, Screening-Ergebnissen und gegebenenfalls eingereichten Unterlagen bewertet. Freigabe bezeichnet die Freigabe der beantragten Kontoanlage. K11: Privatkonto beantragt, aber Freitext nennt geplante Abwicklung von Auftraggeberhonoraren und Kosten für Kundenprojekte. Regeln grün; LLM empfiehlt manuelle Prüfung des Widerspruchs.</bpmn:documentation>
+    <bpmn:startEvent id="Start_KYC" name="Identitätsprüfung erfolgreich abgeschlossen">
+      <bpmn:outgoing>Flow_Start</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:businessRuleTask id="Task_Rules" name="Prüfung nach Regeln">
+      <bpmn:documentation>Demo-Regeln nach erfolgreicher Identitätsprüfung: R1 Kunde selbst wirtschaftlich berechtigt: Nein (Kundenangabe Ja/Nein); R2 PEP-Status bestätigt; R3 möglicher Screening-Treffer ungeklärt; R4 USA-Bezug. Diese Trigger erzeugen manuellen Prüfbedarf. R5 bestätigter Sanktionstreffer führt zur Ablehnung. Die Identitätsprüfung ist eine Eingangsvoraussetzung und kein Entscheidungskriterium dieser Regeln.</bpmn:documentation>
+      <bpmn:incoming>Flow_Start</bpmn:incoming>
+      <bpmn:outgoing>Flow_Rules_Result</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="Gateway_Rules" name="Ablehnung durch Regeln?" default="Flow_Rules_LLM">
+      <bpmn:incoming>Flow_Rules_Result</bpmn:incoming>
+      <bpmn:outgoing>Flow_Rules_LLM</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Rules_Reject</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_LLM" name="Prüfung mit LLM">
+      <bpmn:documentation>Wird auch nach grünem Regelergebnis ausgeführt. Liefert eine begründete Bewertung des Bedarfs einer manuellen Prüfung vor der Kontoanlage. Eingaben: Kundenprofil, Wohnadresse, optionaler Arbeitgeber samt Anschrift, Entstehung des Gesamtvermögens als Freitext, US-Steuerpflicht und FATCA-Status laut Selbstauskunft, optionale Auslandswohnsitze, Kontotyp, Kontozweck, geplante Nutzung und vorhandene Unterlagen. K11: Privatkonto mit geplanter Geschäftsnutzung laut Kundenfreitext.</bpmn:documentation>
+      <bpmn:incoming>Flow_Rules_LLM</bpmn:incoming>
+      <bpmn:outgoing>Flow_LLM_Result</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_LLM" name="Manuelle Prüfung erforderlich?" default="Flow_LLM_Manual">
+      <bpmn:incoming>Flow_LLM_Result</bpmn:incoming>
+      <bpmn:outgoing>Flow_LLM_Approve</bpmn:outgoing>
+      <bpmn:outgoing>Flow_LLM_Manual</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_Manual" name="Manuelle Prüfung">
+      <bpmn:incoming>Flow_LLM_Manual</bpmn:incoming>
+      <bpmn:outgoing>Flow_Manual_Result</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_Manual" name="Entscheidung">
+      <bpmn:incoming>Flow_Manual_Result</bpmn:incoming>
+      <bpmn:outgoing>Flow_Manual_Approve</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Manual_Reject</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Approve" name="Freigabe">
+      <bpmn:incoming>Flow_LLM_Approve</bpmn:incoming>
+      <bpmn:incoming>Flow_Manual_Approve</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Reject" name="Ablehnung">
+      <bpmn:incoming>Flow_Rules_Reject</bpmn:incoming>
+      <bpmn:incoming>Flow_Manual_Reject</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_Start" sourceRef="Start_KYC" targetRef="Task_Rules" />
+    <bpmn:sequenceFlow id="Flow_Rules_Result" sourceRef="Task_Rules" targetRef="Gateway_Rules" />
+    <bpmn:sequenceFlow id="Flow_Rules_LLM" sourceRef="Gateway_Rules" targetRef="Task_LLM" name="Nein: grün / Prüfbedarf" />
+    <bpmn:sequenceFlow id="Flow_Rules_Reject" sourceRef="Gateway_Rules" targetRef="End_Reject" name="Ja: Ablehnung">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">rule_result == "reject"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_LLM_Result" sourceRef="Task_LLM" targetRef="Gateway_LLM" />
+    <bpmn:sequenceFlow id="Flow_LLM_Approve" sourceRef="Gateway_LLM" targetRef="End_Approve" name="Nein und Regeln grün">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">rule_result == "green" and llm_review_required == false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_LLM_Manual" sourceRef="Gateway_LLM" targetRef="Task_Manual" name="Ja / LLM unklar / Regeltrigger" />
+    <bpmn:sequenceFlow id="Flow_Manual_Result" sourceRef="Task_Manual" targetRef="Gateway_Manual" />
+    <bpmn:sequenceFlow id="Flow_Manual_Approve" sourceRef="Gateway_Manual" targetRef="End_Approve" name="Freigabe">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">manual_decision == "approve"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Manual_Reject" sourceRef="Gateway_Manual" targetRef="End_Reject" name="Ablehnung">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">manual_decision == "reject"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_KYC" name="KYC-Prüfprozess">
+    <bpmndi:BPMNPlane id="Plane_KYC" bpmnElement="Process_KYC">
+      <bpmndi:BPMNShape id="Shape_Start_KYC" bpmnElement="Start_KYC">
+        <dc:Bounds x="42" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="0" y="280" width="120" height="60" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Rules" bpmnElement="Task_Rules">
+        <dc:Bounds x="110" y="210" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_Rules" bpmnElement="Gateway_Rules" isMarkerVisible="true">
+        <dc:Bounds x="325" y="225" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="295" y="285" width="110" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_LLM" bpmnElement="Task_LLM">
+        <dc:Bounds x="450" y="210" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_LLM" bpmnElement="Gateway_LLM" isMarkerVisible="true">
+        <dc:Bounds x="665" y="225" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="630" y="285" width="120" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Manual" bpmnElement="Task_Manual">
+        <dc:Bounds x="790" y="210" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_Manual" bpmnElement="Gateway_Manual" isMarkerVisible="true">
+        <dc:Bounds x="1005" y="225" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="980" y="285" width="100" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Approve" bpmnElement="End_Approve">
+        <dc:Bounds x="1182" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1160" y="72" width="80" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Reject" bpmnElement="End_Reject">
+        <dc:Bounds x="1182" y="402" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1155" y="446" width="90" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Flow_Start" bpmnElement="Flow_Start">
+        <di:waypoint x="78" y="250" />
+        <di:waypoint x="110" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Rules_Result" bpmnElement="Flow_Rules_Result">
+        <di:waypoint x="290" y="250" />
+        <di:waypoint x="325" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Rules_LLM" bpmnElement="Flow_Rules_LLM">
+        <di:waypoint x="375" y="250" />
+        <di:waypoint x="450" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="360" y="175" width="105" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Rules_Reject" bpmnElement="Flow_Rules_Reject">
+        <di:waypoint x="350" y="275" />
+        <di:waypoint x="350" y="420" />
+        <di:waypoint x="1182" y="420" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="360" y="340" width="100" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_LLM_Result" bpmnElement="Flow_LLM_Result">
+        <di:waypoint x="630" y="250" />
+        <di:waypoint x="665" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_LLM_Approve" bpmnElement="Flow_LLM_Approve">
+        <di:waypoint x="690" y="225" />
+        <di:waypoint x="690" y="120" />
+        <di:waypoint x="1182" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="710" y="130" width="120" height="38" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_LLM_Manual" bpmnElement="Flow_LLM_Manual">
+        <di:waypoint x="715" y="250" />
+        <di:waypoint x="790" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="700" y="170" width="105" height="60" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Manual_Result" bpmnElement="Flow_Manual_Result">
+        <di:waypoint x="970" y="250" />
+        <di:waypoint x="1005" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Manual_Approve" bpmnElement="Flow_Manual_Approve">
+        <di:waypoint x="1030" y="225" />
+        <di:waypoint x="1030" y="170" />
+        <di:waypoint x="1200" y="170" />
+        <di:waypoint x="1200" y="138" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1080" y="145" width="75" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Manual_Reject" bpmnElement="Flow_Manual_Reject">
+        <di:waypoint x="1030" y="275" />
+        <di:waypoint x="1030" y="370" />
+        <di:waypoint x="1200" y="370" />
+        <di:waypoint x="1200" y="402" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1070" y="345" width="90" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

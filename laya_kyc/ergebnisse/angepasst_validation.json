@@ -1,0 +1,139 @@
+{
+  "name": "angepasst",
+  "modell": {
+    "genauigkeit_3_klassen": 1.0,
+    "nll": -0.0,
+    "ece_10_bins": 0.0,
+    "vorhersagen": {
+      "manuelle_pruefung": 240,
+      "keine_manuelle_pruefung": 250,
+      "unklar": 10
+    },
+    "verwechslungsmatrix_soll_zu_ist": {
+      "keine_manuelle_pruefung": {
+        "keine_manuelle_pruefung": 250,
+        "manuelle_pruefung": 0,
+        "unklar": 0
+      },
+      "manuelle_pruefung": {
+        "keine_manuelle_pruefung": 0,
+        "manuelle_pruefung": 240,
+        "unklar": 0
+      },
+      "unklar": {
+        "keine_manuelle_pruefung": 0,
+        "manuelle_pruefung": 0,
+        "unklar": 10
+      }
+    }
+  },
+  "split": "validation",
+  "temperatur": 1.0,
+  "faelle": 500,
+  "bpmn_pfad_alle": {
+    "faelle": 500,
+    "faelschlich_automatisch_freigegeben": 0,
+    "unnoetig_manuell": 0,
+    "korrekt_weitergeleitet": 250,
+    "korrekt_freigegeben": 250,
+    "genauigkeit_pfad": 1.0
+  },
+  "bpmn_pfad_regelgruen": {
+    "faelle": 435,
+    "faelschlich_automatisch_freigegeben": 0,
+    "unnoetig_manuell": 0,
+    "korrekt_weitergeleitet": 185,
+    "korrekt_freigegeben": 250,
+    "genauigkeit_pfad": 1.0
+  },
+  "szenarien": {
+    "adresse_reeperbahn_umfeld_pruefbedarf": {
+      "faelle": 5,
+      "pfad_fehler": 0
+    },
+    "arbeitgeber_widerspruch": {
+      "faelle": 20,
+      "pfad_fehler": 0
+    },
+    "arbeitgeberwechsel_erklaert": {
+      "faelle": 10,
+      "pfad_fehler": 0
+    },
+    "auslandswohnsitz_konsistent": {
+      "faelle": 20,
+      "pfad_fehler": 0
+    },
+    "auslandswohnsitz_widerspruch": {
+      "faelle": 10,
+      "pfad_fehler": 0
+    },
+    "darlehen_erklaert": {
+      "faelle": 10,
+      "pfad_fehler": 0
+    },
+    "erbschaft_belegt": {
+      "faelle": 35,
+      "pfad_fehler": 0
+    },
+    "fahrzeugverkauf_belegt": {
+      "faelle": 40,
+      "pfad_fehler": 0
+    },
+    "fatca_selbstauskunft_widerspruch": {
+      "faelle": 20,
+      "pfad_fehler": 0
+    },
+    "gehalt_konsistent": {
+      "faelle": 35,
+      "pfad_fehler": 0
+    },
+    "mittelherkunft_widerspruch": {
+      "faelle": 10,
+      "pfad_fehler": 0
+    },
+    "privatkonto_geschaeftlich_geplant": {
+      "faelle": 95,
+      "pfad_fehler": 0
+    },
+    "regel_r1": {
+      "faelle": 15,
+      "pfad_fehler": 0
+    },
+    "regel_r2": {
+      "faelle": 25,
+      "pfad_fehler": 0
+    },
+    "regel_r3": {
+      "faelle": 25,
+      "pfad_fehler": 0
+    },
+    "ruhestand_konsistent": {
+      "faelle": 10,
+      "pfad_fehler": 0
+    },
+    "schenkung_belegt": {
+      "faelle": 25,
+      "pfad_fehler": 0
+    },
+    "schenkung_nachweis_offen": {
+      "faelle": 10,
+      "pfad_fehler": 0
+    },
+    "selbststaendig_private_nutzung": {
+      "faelle": 45,
+      "pfad_fehler": 0
+    },
+    "us_status_konsistent": {
+      "faelle": 10,
+      "pfad_fehler": 0
+    },
+    "vermoegensaufbau_belegt": {
+      "faelle": 10,
+      "pfad_fehler": 0
+    },
+    "vermoegensaufbau_widerspruch": {
+      "faelle": 15,
+      "pfad_fehler": 0
+    }
+  }
+}

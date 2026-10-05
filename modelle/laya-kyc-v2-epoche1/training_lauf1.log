@@ -1,0 +1,33 @@
+23:16:58 Device mps; train 4781, validation 598; micro_batch 4, grad_accum 8, epochen 2, nur_kopf False
+23:17:38 Validation vor Training: {'nll': 1.3967, 'genauigkeit_3_klassen': 0.4732, 'faelschlich_freigegeben': 8, 'unnoetig_manuell': 283}
+23:18:52 Epoche 1: 4%, CE 1.3285, 1.2 min seit Start
+23:19:59 Epoche 1: 8%, CE 1.1378, 2.4 min seit Start
+23:21:05 Epoche 1: 13%, CE 1.0258, 3.5 min seit Start
+23:22:21 Epoche 1: 17%, CE 0.9612, 4.7 min seit Start
+23:23:50 Epoche 1: 21%, CE 0.9206, 6.2 min seit Start
+23:25:23 Epoche 1: 25%, CE 0.8812, 7.8 min seit Start
+23:26:52 Epoche 1: 29%, CE 0.8505, 9.2 min seit Start
+23:28:12 Epoche 1: 33%, CE 0.8129, 10.6 min seit Start
+23:29:29 Epoche 1: 38%, CE 0.8001, 11.9 min seit Start
+23:30:45 Epoche 1: 42%, CE 0.7947, 13.1 min seit Start
+23:32:04 Epoche 1: 46%, CE 0.7714, 14.4 min seit Start
+23:33:23 Epoche 1: 50%, CE 0.7604, 15.8 min seit Start
+23:34:46 Epoche 1: 54%, CE 0.7379, 17.1 min seit Start
+23:36:16 Epoche 1: 59%, CE 0.7161, 18.6 min seit Start
+23:37:47 Epoche 1: 63%, CE 0.6995, 20.2 min seit Start
+23:39:23 Epoche 1: 67%, CE 0.6957, 21.8 min seit Start
+23:40:56 Epoche 1: 71%, CE 0.6926, 23.3 min seit Start
+23:42:31 Epoche 1: 75%, CE 0.7416, 24.9 min seit Start
+23:44:05 Epoche 1: 79%, CE 0.7740, 26.5 min seit Start
+23:45:40 Epoche 1: 84%, CE 0.8147, 28.0 min seit Start
+23:47:11 Epoche 1: 88%, CE 0.8723, 29.6 min seit Start
+23:48:44 Epoche 1: 92%, CE 0.8830, 31.1 min seit Start
+23:50:18 Epoche 1: 96%, CE 0.8773, 32.7 min seit Start
+23:52:38 Epoche 1 fertig: train CE 0.9244; validation {'nll': 0.9032, 'genauigkeit_3_klassen': 0.8746, 'faelschlich_freigegeben': 69, 'unnoetig_manuell': 6}
+23:52:39   -> bester Checkpoint (Epoche 1)
+23:54:14 Epoche 2: 4%, CE 0.7945, 36.6 min seit Start
+23:55:42 Epoche 2: 8%, CE 0.8105, 38.1 min seit Start
+23:58:23 Epoche 2: 13%, CE 1.1907, 40.7 min seit Start
+00:16:45 Epoche 2: 17%, CE 1.1879, 59.1 min seit Start
+00:22:26 Epoche 2: 21%, CE 1.3162, 64.8 min seit Start
+00:23:45 Epoche 2: 25%, CE 1.2153, 66.1 min seit Start

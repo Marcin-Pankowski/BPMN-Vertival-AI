@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/bin/python --version)",
+      "Bash(.venv/bin/pip list *)",
+      "Bash(sysctl -n machdep.cpu.brand_string hw.memsize)",
+      "Read(//Users/mp/.cache/huggingface/hub/**)",
+      "Bash(python3 -c ' *)",
+      "Bash(.venv/bin/pip show *)",
+      "Bash(.venv/bin/python -c \"import laya,os;print\\(laya.__file__\\)\")",
+      "Bash(mkdir -p \"/private/tmp/claude-502/-Users-mp-Documents-VSC-Projekte-Vortr-ge-Vertical-AI/bcf324ec-249a-44d2-ad51-93de2f8a1cc9/scratchpad\")",
+      "Bash(curl -sSfL -o finetune_mps.py https://raw.githubusercontent.com/NandhaKishorM/laya/main/notebooks/laya_finetune_typed_decisions_mps.py)"
+    ]
+  }
+}

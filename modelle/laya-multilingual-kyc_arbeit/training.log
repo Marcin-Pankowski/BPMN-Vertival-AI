@@ -1,0 +1,68 @@
+18:32:34 Device mps; train 4000, validation 500; micro_batch 4, grad_accum 8, epochen 3, nur_kopf False
+18:33:07 Validation vor Training: {'nll': 1.4147, 'genauigkeit_3_klassen': 0.46, 'faelschlich_freigegeben': 7, 'unnoetig_manuell': 245}
+18:34:21 Epoche 1: 5%, CE 1.2492, 1.2 min seit Start
+18:35:31 Epoche 1: 10%, CE 1.0368, 2.4 min seit Start
+18:37:01 Epoche 1: 15%, CE 0.9587, 3.9 min seit Start
+18:38:38 Epoche 1: 20%, CE 0.9211, 5.5 min seit Start
+18:40:09 Epoche 1: 25%, CE 0.9307, 7.0 min seit Start
+18:41:43 Epoche 1: 30%, CE 0.9007, 8.6 min seit Start
+18:43:14 Epoche 1: 35%, CE 0.8601, 10.1 min seit Start
+18:44:48 Epoche 1: 40%, CE 0.8226, 11.7 min seit Start
+18:46:35 Epoche 1: 45%, CE 0.7760, 13.5 min seit Start
+18:48:50 Epoche 1: 50%, CE 0.7321, 15.7 min seit Start
+18:51:10 Epoche 1: 55%, CE 0.6960, 18.1 min seit Start
+18:54:15 Epoche 1: 60%, CE 0.6610, 21.1 min seit Start
+18:55:25 Epoche 1: 65%, CE 0.6302, 22.3 min seit Start
+18:56:38 Epoche 1: 70%, CE 0.5977, 23.5 min seit Start
+18:58:01 Epoche 1: 75%, CE 0.5667, 24.9 min seit Start
+18:59:32 Epoche 1: 80%, CE 0.5387, 26.4 min seit Start
+19:01:00 Epoche 1: 85%, CE 0.5121, 27.9 min seit Start
+19:02:27 Epoche 1: 90%, CE 0.4856, 29.3 min seit Start
+19:04:11 Epoche 1: 95%, CE 0.4601, 31.1 min seit Start
+19:05:30 Epoche 1: 100%, CE 0.4476, 32.4 min seit Start
+19:06:09 Epoche 1 fertig: train CE 0.4476; validation {'nll': 0.0895, 'genauigkeit_3_klassen': 0.988, 'faelschlich_freigegeben': 0, 'unnoetig_manuell': 6}
+19:06:10   -> bester Checkpoint (Epoche 1)
+19:07:32 Epoche 2: 5%, CE 0.0000, 34.4 min seit Start
+19:08:56 Epoche 2: 10%, CE 0.0014, 35.8 min seit Start
+19:10:23 Epoche 2: 15%, CE 0.0289, 37.3 min seit Start
+19:11:49 Epoche 2: 20%, CE 0.0357, 38.7 min seit Start
+19:13:15 Epoche 2: 25%, CE 0.0285, 40.1 min seit Start
+19:14:42 Epoche 2: 30%, CE 0.0238, 41.6 min seit Start
+19:16:09 Epoche 2: 35%, CE 0.0204, 43.0 min seit Start
+19:17:35 Epoche 2: 40%, CE 0.0178, 44.5 min seit Start
+19:19:03 Epoche 2: 45%, CE 0.0214, 45.9 min seit Start
+19:20:32 Epoche 2: 50%, CE 0.0193, 47.4 min seit Start
+19:22:00 Epoche 2: 55%, CE 0.0175, 48.9 min seit Start
+19:23:27 Epoche 2: 60%, CE 0.0160, 50.3 min seit Start
+19:24:55 Epoche 2: 65%, CE 0.0148, 51.8 min seit Start
+19:26:23 Epoche 2: 70%, CE 0.0181, 53.3 min seit Start
+19:27:51 Epoche 2: 75%, CE 0.0169, 54.7 min seit Start
+19:29:20 Epoche 2: 80%, CE 0.0159, 56.2 min seit Start
+19:30:48 Epoche 2: 85%, CE 0.0149, 57.7 min seit Start
+19:32:19 Epoche 2: 90%, CE 0.0141, 59.2 min seit Start
+19:33:46 Epoche 2: 95%, CE 0.0134, 60.7 min seit Start
+19:35:15 Epoche 2: 100%, CE 0.0127, 62.1 min seit Start
+19:35:56 Epoche 2 fertig: train CE 0.0127; validation {'nll': -0.0, 'genauigkeit_3_klassen': 1.0, 'faelschlich_freigegeben': 0, 'unnoetig_manuell': 0}
+19:35:56   -> bester Checkpoint (Epoche 2)
+19:37:31 Epoche 3: 5%, CE 0.0000, 64.4 min seit Start
+19:39:05 Epoche 3: 10%, CE 0.0000, 66.0 min seit Start
+19:40:45 Epoche 3: 15%, CE 0.0000, 67.6 min seit Start
+19:42:43 Epoche 3: 20%, CE 0.0000, 69.6 min seit Start
+19:44:44 Epoche 3: 25%, CE 0.0000, 71.6 min seit Start
+19:46:42 Epoche 3: 30%, CE 0.0000, 73.6 min seit Start
+19:48:41 Epoche 3: 35%, CE 0.0000, 75.6 min seit Start
+19:50:25 Epoche 3: 40%, CE 0.0000, 77.3 min seit Start
+19:51:57 Epoche 3: 45%, CE 0.0000, 78.8 min seit Start
+19:53:27 Epoche 3: 50%, CE 0.0000, 80.3 min seit Start
+19:54:57 Epoche 3: 55%, CE 0.0000, 81.8 min seit Start
+19:56:27 Epoche 3: 60%, CE 0.0000, 83.3 min seit Start
+19:57:57 Epoche 3: 65%, CE 0.0000, 84.8 min seit Start
+19:59:32 Epoche 3: 70%, CE 0.0000, 86.4 min seit Start
+20:01:41 Epoche 3: 75%, CE 0.0000, 88.6 min seit Start
+20:03:54 Epoche 3: 80%, CE 0.0000, 90.8 min seit Start
+20:05:40 Epoche 3: 85%, CE 0.0000, 92.6 min seit Start
+20:07:11 Epoche 3: 90%, CE 0.0000, 94.1 min seit Start
+20:08:39 Epoche 3: 95%, CE 0.0000, 95.5 min seit Start
+20:10:05 Epoche 3: 100%, CE 0.0000, 97.0 min seit Start
+20:10:46 Epoche 3 fertig: train CE 0.0000; validation {'nll': -0.0, 'genauigkeit_3_klassen': 1.0, 'faelschlich_freigegeben': 0, 'unnoetig_manuell': 0}
+20:11:28 Fertig nach 97.6 min. Beste Epoche 2, Temperatur 1.000. Modell: /Users/mp/Documents/VSC-Projekte/Vorträge/Vertical AI/modelle/laya-multilingual-kyc

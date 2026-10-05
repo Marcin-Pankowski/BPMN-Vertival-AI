@@ -1,0 +1,18 @@
+# Python-Umgebung und Caches
+.venv/
+__pycache__/
+
+# Modelle sind zu groß für Git (je ca. 650 MB); nur die Trainingsprotokolle werden versioniert
+modelle/**
+!modelle/**/
+!modelle/**/*.log
+
+# Build-Ausgaben und Laufzeit-Logs
+kyc-prozess/target/
+logs/
+node_modules/
+
+# Lokale Einstellungen und Systemdateien
+.claude/settings.local.json
+.DS_Store
+~$*

@@ -1,0 +1,71 @@
+{
+  "datei": "KYC_Trainingsdaten_6000.json",
+  "sha256": "85c3e9a4832bf458bc34c9916ebc37da494893c1f750e8a945f2dacb33e4d0ba",
+  "groesse_bytes": 21799642,
+  "schema_valide": true,
+  "anzahl_kunden": 6000,
+  "eindeutige_ids": true,
+  "eindeutige_eingaben": true,
+  "belegpfade_geprueft": true,
+  "familien_in_mehreren_splits": 0,
+  "statistik": {
+    "anzahl_kunden": 6000,
+    "splits": {
+      "test": {
+        "manuelle_pruefung": 310,
+        "keine_manuelle_pruefung": 296,
+        "unklar": 15
+      },
+      "train": {
+        "manuelle_pruefung": 2315,
+        "keine_manuelle_pruefung": 2316,
+        "unklar": 150
+      },
+      "validation": {
+        "manuelle_pruefung": 300,
+        "keine_manuelle_pruefung": 288,
+        "unklar": 10
+      }
+    },
+    "manuelle_pruefung": {
+      "Ja": 3100,
+      "Nein": 2900
+    },
+    "szenarien": {
+      "regel_r2": 325,
+      "schenkung_belegt": 200,
+      "darlehen_erklaert": 125,
+      "regel_r1": 350,
+      "privatkonto_geschaeftlich_geplant": 500,
+      "fahrzeugverkauf_belegt": 325,
+      "regel_r3": 325,
+      "vermoegensaufbau_widerspruch": 200,
+      "gehalt_konsistent": 350,
+      "erbschaft_belegt": 300,
+      "schenkung_nachweis_offen": 175,
+      "fatca_selbstauskunft_widerspruch": 125,
+      "ruhestand_konsistent": 275,
+      "selbststaendig_private_nutzung": 450,
+      "auslandswohnsitz_widerspruch": 75,
+      "arbeitgeber_widerspruch": 125,
+      "auslandswohnsitz_konsistent": 150,
+      "vermoegensaufbau_belegt": 100,
+      "adresse_reeperbahn_umfeld_pruefbedarf": 50,
+      "us_status_konsistent": 150,
+      "mittelherkunft_widerspruch": 250,
+      "arbeitgeberwechsel_erklaert": 75,
+      "adresse_reeperbahn_umfeld_divers": 400,
+      "ruecklagen_belegt_adresse_unauffaellig": 150,
+      "ruecklagen_belegt_selbststaendig": 150,
+      "arbeitgeber_im_reeperbahn_umfeld": 100,
+      "selbststaendig_gehalt_widerspruch": 200
+    },
+    "neue_szenarien": {
+      "adresse_reeperbahn_umfeld_divers": 400,
+      "ruecklagen_belegt_adresse_unauffaellig": 150,
+      "ruecklagen_belegt_selbststaendig": 150,
+      "arbeitgeber_im_reeperbahn_umfeld": 100,
+      "selbststaendig_gehalt_widerspruch": 200
+    }
+  }
+}

@@ -15,7 +15,7 @@ Vortrag und Demo: Ein KYC-Prüfprozess bei der Kontoeröffnung kombiniert DMN-Re
 | `KYC_Pruefprozess.bpmn` | Fachlicher Prozessentwurf |
 | `laya_kyc/` | Training, Auswertung, Gegenproben, Laya-REST-Dienst |
 | `kyc-prozess/` | Kogito-Prozessdienst mit Weboberfläche, siehe [kyc-prozess/README.md](kyc-prozess/README.md) |
-| `praesentation/` | Präsentation; `build_deck.js` erzeugt `Vertical_AI_KYC.pptx` |
+| `praesentation/` | Präsentation `Vertical_AI_KYC.pptx` mit Bildern und Logos |
 
 ## Klonen und starten
 

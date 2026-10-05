@@ -19,17 +19,24 @@ Vortrag und Demo: Ein KYC-Prüfprozess bei der Kontoeröffnung kombiniert DMN-Re
 
 ## Klonen und starten
 
-Das Demo-Modell v2 (`modelle/laya-multilingual-kyc-v2/`, 678 MB) liegt per [Git LFS](https://git-lfs.com) im Repository. Git LFS muss vor dem Klonen installiert sein (`brew install git-lfs && git lfs install`), sonst kommen nur Platzhalter an; nachträglich hilft `git lfs pull`.
-
 ```bash
 git clone https://github.com/Marcin-Pankowski/BPMN-Vertival-AI.git
 cd BPMN-Vertival-AI
 ./start_demo.sh
 ```
 
-Beim ersten Start legt `start_demo.sh` die Python-Umgebung `.venv/` aus `requirements.txt` an (lädt PyTorch, einige Minuten) und baut den Prozessdienst mit Maven (Java 21). Details: [Quickstart.md](Quickstart.md).
+Beim ersten Start lädt `start_demo.sh` das Demo-Modell v2 als ZIP aus dem Release [modelle](https://github.com/Marcin-Pankowski/BPMN-Vertival-AI/releases/tag/modelle) (ca. 600 MB), legt die Python-Umgebung `.venv/` aus `requirements.txt` an (lädt PyTorch, einige Minuten) und baut den Prozessdienst mit Maven (Java 21). Details: [Quickstart.md](Quickstart.md).
 
-## Nicht im Repository
+## Modelle
 
-- **Basismodell und Modell v1** (je ca. 650 MB): nur für Training und Vergleiche nötig, nicht für die Demo. Das Basismodell `convaiinnovations/laya-multilingual` von Hugging Face nach `modelle/laya-multilingual-base/` laden; v1 entsteht mit `laya_kyc/kyc_train.py` auf `KYC_Trainingsdaten_5000.json` (siehe KYC_Trainingsergebnisse.md). Die Trainingsprotokolle liegen unter `modelle/*_arbeit/`.
-- **Python-Umgebung** (`.venv/`) und **Build-Ausgaben** (`kyc-prozess/target/`): erzeugt `start_demo.sh` selbst.
+Die Modelle sind zu groß für Git und liegen als ZIP im Release [modelle](https://github.com/Marcin-Pankowski/BPMN-Vertival-AI/releases/tag/modelle). Im Projektordner entpacken (`unzip <datei>.zip`), sie landen unter `modelle/`.
+
+| ZIP | Inhalt | Nötig für |
+| --- | --- | --- |
+| `laya-multilingual-kyc-v2.zip` | Modell v2, aktiv im Laya-Dienst | Demo (lädt `start_demo.sh` automatisch) |
+| `laya-multilingual-kyc.zip` | Modell v1 | Vergleiche und Gegenproben |
+| `laya-multilingual-base.zip` | Basismodell `convaiinnovations/laya-multilingual` (Apache-2.0) | Training, Vergleich ohne Anpassung |
+
+Die Trainingsprotokolle liegen im Repository unter `modelle/*_arbeit/`. Den Zwischenstand nach Epoche 1, ab dem v2 weitertrainiert wurde, enthält das Release nicht.
+
+Nicht im Repository sind außerdem `.venv/` und `kyc-prozess/target/`; beides erzeugt `start_demo.sh` selbst.

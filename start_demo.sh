@@ -7,7 +7,7 @@
 #   BUILD=1 ./start_demo.sh              # vorher neu bauen (mvn package, inkl. Tests)
 #   NO_CASES=1 ./start_demo.sh           # nur Dienste starten, keine Demo-Fälle
 #
-# Fehlt .venv, legt das Skript sie aus requirements.txt an. Das Modell v2 kommt per Git LFS mit dem Repository.
+# Fehlt .venv, legt das Skript sie aus requirements.txt an. Fehlt Modell v2, lädt es das ZIP aus dem GitHub Release "modelle".
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
@@ -23,10 +23,12 @@ for port in 8000 8080; do
 done
 
 MODEL="$ROOT/modelle/laya-multilingual-kyc-v2/model.safetensors"
-if [[ ! -f "$MODEL" ]] || [[ $(wc -c <"$MODEL") -lt 1000000 ]]; then
-  echo "Modell fehlt oder ist nur ein Git-LFS-Platzhalter: $MODEL" >&2
-  echo "Abhilfe: git lfs install && git lfs pull" >&2
-  exit 1
+MODEL_ZIP_URL="https://github.com/Marcin-Pankowski/BPMN-Vertival-AI/releases/download/modelle/laya-multilingual-kyc-v2.zip"
+if [[ ! -f "$MODEL" ]]; then
+  echo "Lade Modell v2 aus dem GitHub Release (ca. 600 MB, einmalig) …"
+  curl -fL --progress-bar -o "$ROOT/modelle-v2.zip" "$MODEL_ZIP_URL"
+  unzip -q -o "$ROOT/modelle-v2.zip" -d "$ROOT"
+  rm -f "$ROOT/modelle-v2.zip"
 fi
 
 if [[ ! -x "$ROOT/.venv/bin/uvicorn" ]]; then

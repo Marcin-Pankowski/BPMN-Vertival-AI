@@ -6,7 +6,7 @@
 
 - Python 3.12 oder neuer; die Umgebung `.venv/` legt das Skript beim ersten Start selbst aus `requirements.txt` an
 - Java 21 und Maven (beim ersten Start wird der Prozessdienst gebaut)
-- Modell `modelle/laya-multilingual-kyc-v2/`, kommt per Git LFS mit dem Repository (fehlt es: `git lfs pull`)
+- Modell `modelle/laya-multilingual-kyc-v2/`; fehlt es, lädt das Skript es beim ersten Start als ZIP aus dem GitHub Release `modelle` (ca. 600 MB)
 - Ports 8000 (Laya) und 8080 (Kogito) frei
 
 ## Starten
@@ -18,7 +18,7 @@ cd "/Users/mp/Documents/VSC-Projekte/Vorträge/Vertical AI"
 
 Ablauf:
 
-1. Fehlt `.venv/`, wird sie angelegt (einmalig, einige Minuten).
+1. Fehlen Modell oder `.venv/`, werden sie geladen bzw. angelegt (einmalig, einige Minuten).
 2. Fehlt der Build des Prozessdienstes, baut das Skript ihn zuerst (`mvn package` mit Tests, ca. 1 Minute).
 3. Laya lädt das Modell. Das dauert etwa 40 Sekunden, das Skript zeigt so lange Punkte an.
 4. Kogito ist nach wenigen Sekunden bereit.
@@ -82,7 +82,7 @@ Strg+C im Terminal von `start_demo.sh`. Das Skript beendet beide Dienste. Der Br
 | Meldung | Lösung |
 | --- | --- |
 | `Port 8000 ist schon belegt` (oder 8080) | Alte Instanz läuft noch: `lsof -ti tcp:8000 \| xargs kill` (bzw. 8080) |
-| `Modell fehlt oder ist nur ein Git-LFS-Platzhalter` | `git lfs install && git lfs pull` |
+| Download des Modells schlägt fehl | ZIP von der Release-Seite `modelle` laden und im Projektordner entpacken (`unzip laya-multilingual-kyc-v2.zip`) |
 | `Warte auf Laya … ✗ abgebrochen` | `logs/laya.log` ansehen |
 | `Warte auf Kogito … ✗` | `logs/kogito.log` ansehen; Java-Version prüfen (`java -version`, nötig ist 21) |
 | Laya-Ergebnis `fehler` in der Oberfläche | Laya-Dienst nicht erreichbar; der Fall geht korrekt in die manuelle Prüfung |

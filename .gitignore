@@ -2,12 +2,10 @@
 .venv/
 __pycache__/
 
-# Modelle (je ca. 650 MB) werden nicht versioniert, außer den Trainingsprotokollen und Modell v2
+# Modelle (je ca. 650 MB) liegen als ZIP im GitHub Release "modelle"; versioniert werden nur die Trainingsprotokolle
 modelle/**
 !modelle/**/
 !modelle/**/*.log
-# Modell v2 (aktiv in der Demo) wird über Git LFS versioniert, siehe .gitattributes
-!modelle/laya-multilingual-kyc-v2/**
 
 # Build-Ausgaben und Laufzeit-Logs
 kyc-prozess/target/

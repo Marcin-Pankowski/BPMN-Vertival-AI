@@ -6,6 +6,8 @@
 #   ./start_demo.sh --decide approve     # Argumente gehen an run_demo_cases.py
 #   BUILD=1 ./start_demo.sh              # vorher neu bauen (mvn package, inkl. Tests)
 #   NO_CASES=1 ./start_demo.sh           # nur Dienste starten, keine Demo-Fälle
+#
+# Fehlt .venv, legt das Skript sie aus requirements.txt an. Das Modell v2 kommt per Git LFS mit dem Repository.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
@@ -19,6 +21,21 @@ for port in 8000 8080; do
     exit 1
   fi
 done
+
+MODEL="$ROOT/modelle/laya-multilingual-kyc-v2/model.safetensors"
+if [[ ! -f "$MODEL" ]] || [[ $(wc -c <"$MODEL") -lt 1000000 ]]; then
+  echo "Modell fehlt oder ist nur ein Git-LFS-Platzhalter: $MODEL" >&2
+  echo "Abhilfe: git lfs install && git lfs pull" >&2
+  exit 1
+fi
+
+if [[ ! -x "$ROOT/.venv/bin/uvicorn" ]]; then
+  PY="$(command -v python3.12 || command -v python3)"
+  echo "Lege Python-Umgebung .venv mit $("$PY" --version) an (einmalig, lädt PyTorch, einige Minuten) …"
+  "$PY" -m venv "$ROOT/.venv"
+  "$ROOT/.venv/bin/pip" install -q --upgrade pip
+  "$ROOT/.venv/bin/pip" install -q -r "$ROOT/requirements.txt"
+fi
 
 if [[ "${BUILD:-0}" == "1" || ! -f "$JAR" ]]; then
   echo "Baue Prozessdienst …"

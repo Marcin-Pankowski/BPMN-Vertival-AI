@@ -1,0 +1,2 @@
+modelle/**/*.safetensors filter=lfs diff=lfs merge=lfs -text
+modelle/**/tokenizer.json filter=lfs diff=lfs merge=lfs -text

@@ -17,8 +17,19 @@ Vortrag und Demo: Ein KYC-Prüfprozess bei der Kontoeröffnung kombiniert DMN-Re
 | `kyc-prozess/` | Kogito-Prozessdienst mit Weboberfläche, siehe [kyc-prozess/README.md](kyc-prozess/README.md) |
 | `praesentation/` | Präsentation; `build_deck.js` erzeugt `Vertical_AI_KYC.pptx` |
 
+## Klonen und starten
+
+Das Demo-Modell v2 (`modelle/laya-multilingual-kyc-v2/`, 678 MB) liegt per [Git LFS](https://git-lfs.com) im Repository. Git LFS muss vor dem Klonen installiert sein (`brew install git-lfs && git lfs install`), sonst kommen nur Platzhalter an; nachträglich hilft `git lfs pull`.
+
+```bash
+git clone https://github.com/Marcin-Pankowski/BPMN-Vertival-AI.git
+cd BPMN-Vertival-AI
+./start_demo.sh
+```
+
+Beim ersten Start legt `start_demo.sh` die Python-Umgebung `.venv/` aus `requirements.txt` an (lädt PyTorch, einige Minuten) und baut den Prozessdienst mit Maven (Java 21). Details: [Quickstart.md](Quickstart.md).
+
 ## Nicht im Repository
 
-- **Modelle** (`modelle/`, je ca. 650 MB): Das Basismodell `convaiinnovations/laya-multilingual` von Hugging Face nach `modelle/laya-multilingual-base/` laden. Das angepasste Modell v2 entsteht mit `laya_kyc/kyc_train.py` auf `KYC_Trainingsdaten_6000.json` (siehe KYC_Trainingsergebnisse.md). Die Trainingsprotokolle liegen unter `modelle/*_arbeit/`.
-- **Python-Umgebung** (`.venv/`): Python 3.12 mit laya 0.3.24, torch 2.14.1, transformers 5.18.0, fastapi 0.142.2, uvicorn 0.54.0, numpy und jsonschema.
-- **Build-Ausgaben** (`kyc-prozess/target/`): `start_demo.sh` baut den Prozessdienst bei Bedarf mit Maven (Java 21).
+- **Basismodell und Modell v1** (je ca. 650 MB): nur für Training und Vergleiche nötig, nicht für die Demo. Das Basismodell `convaiinnovations/laya-multilingual` von Hugging Face nach `modelle/laya-multilingual-base/` laden; v1 entsteht mit `laya_kyc/kyc_train.py` auf `KYC_Trainingsdaten_5000.json` (siehe KYC_Trainingsergebnisse.md). Die Trainingsprotokolle liegen unter `modelle/*_arbeit/`.
+- **Python-Umgebung** (`.venv/`) und **Build-Ausgaben** (`kyc-prozess/target/`): erzeugt `start_demo.sh` selbst.

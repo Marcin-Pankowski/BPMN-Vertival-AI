@@ -1,0 +1,73 @@
+{
+  "encoder": "jhu-clsp/mmBERT-base",
+  "head_layers": 2,
+  "max_len": 1024,
+  "head_max_len": 256,
+  "max_prefixes": 6,
+  "act_costs": {
+    "escalate": 0.5
+  },
+  "cost_wrong_act": 3.0,
+  "amp_dtype": "bf16",
+  "model_name": "laya-multilingual-kyc-demo",
+  "temperature": [
+    0.994692862033844,
+    1.0,
+    1.0
+  ],
+  "temperature_by_options": {},
+  "training": {
+    "updates": 15987,
+    "epochs_completed": 4,
+    "hours": 4.97,
+    "world_size": 1,
+    "fine_tuned_from_checkpoint": false
+  },
+  "fine_tuned": true,
+  "kyc_training": {
+    "basis": "convaiinnovations/laya-multilingual (weitertrainiert ab laya-kyc-v2-epoche1)",
+    "daten": "KYC_Trainingsdaten_6000.json (split train)",
+    "daten_sha256": "85c3e9a4832bf458bc34c9916ebc37da494893c1f750e8a945f2dacb33e4d0ba",
+    "optionen": [
+      "keine_manuelle_pruefung",
+      "manuelle_pruefung",
+      "unklar"
+    ],
+    "beste_epoche": 2,
+    "epochen": 2,
+    "micro_batch": 4,
+    "grad_accum": 8,
+    "lr_encoder": 1e-05,
+    "lr_kopf": 5e-05,
+    "nur_kopf": false,
+    "nur_kreuzentropie": true,
+    "seed": 20261003,
+    "dauer_minuten": 66.4,
+    "temperatur_kalibriert_auf": "validation",
+    "verlauf_validation": [
+      {
+        "epoche": 0,
+        "nll": 0.9024,
+        "genauigkeit_3_klassen": 0.8746,
+        "faelschlich_freigegeben": 69,
+        "unnoetig_manuell": 6
+      },
+      {
+        "epoche": 1,
+        "train_ce": 0.3114,
+        "nll": 0.1251,
+        "genauigkeit_3_klassen": 0.9632,
+        "faelschlich_freigegeben": 9,
+        "unnoetig_manuell": 13
+      },
+      {
+        "epoche": 2,
+        "train_ce": 0.0287,
+        "nll": 0.0,
+        "genauigkeit_3_klassen": 1.0,
+        "faelschlich_freigegeben": 0,
+        "unnoetig_manuell": 0
+      }
+    ]
+  }
+}

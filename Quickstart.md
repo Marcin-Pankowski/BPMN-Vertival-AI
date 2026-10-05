@@ -4,9 +4,9 @@
 
 ## Voraussetzungen
 
-- Python-Umgebung `.venv/` im Projektordner (enthält Laya, PyTorch und uvicorn)
-- Java 21; Maven nur, wenn neu gebaut werden muss
-- Modell `modelle/laya-multilingual-kyc-v2/`
+- Python 3.12 oder neuer; die Umgebung `.venv/` legt das Skript beim ersten Start selbst aus `requirements.txt` an
+- Java 21 und Maven (beim ersten Start wird der Prozessdienst gebaut)
+- Modell `modelle/laya-multilingual-kyc-v2/`, kommt per Git LFS mit dem Repository (fehlt es: `git lfs pull`)
 - Ports 8000 (Laya) und 8080 (Kogito) frei
 
 ## Starten
@@ -18,12 +18,13 @@ cd "/Users/mp/Documents/VSC-Projekte/Vorträge/Vertical AI"
 
 Ablauf:
 
-1. Fehlt der Build des Prozessdienstes, baut das Skript ihn zuerst (`mvn package` mit Tests, ca. 1 Minute).
-2. Laya lädt das Modell. Das dauert etwa 40 Sekunden, das Skript zeigt so lange Punkte an.
-3. Kogito ist nach wenigen Sekunden bereit.
-4. Die Fälle K01–K15 werden gestartet, je eine Zeile pro Fall.
-5. Der Browser öffnet das Dashboard unter http://localhost:8080/#dashboard.
-6. Das Terminal wartet. **Offen lassen**, solange die Demo läuft.
+1. Fehlt `.venv/`, wird sie angelegt (einmalig, einige Minuten).
+2. Fehlt der Build des Prozessdienstes, baut das Skript ihn zuerst (`mvn package` mit Tests, ca. 1 Minute).
+3. Laya lädt das Modell. Das dauert etwa 40 Sekunden, das Skript zeigt so lange Punkte an.
+4. Kogito ist nach wenigen Sekunden bereit.
+5. Die Fälle K01–K15 werden gestartet, je eine Zeile pro Fall.
+6. Der Browser öffnet das Dashboard unter http://localhost:8080/#dashboard.
+7. Das Terminal wartet. **Offen lassen**, solange die Demo läuft.
 
 Varianten:
 
@@ -81,7 +82,8 @@ Strg+C im Terminal von `start_demo.sh`. Das Skript beendet beide Dienste. Der Br
 | Meldung | Lösung |
 | --- | --- |
 | `Port 8000 ist schon belegt` (oder 8080) | Alte Instanz läuft noch: `lsof -ti tcp:8000 \| xargs kill` (bzw. 8080) |
-| `Warte auf Laya … ✗ abgebrochen` | `logs/laya.log` ansehen; meist fehlt `.venv/` oder das Modellverzeichnis |
+| `Modell fehlt oder ist nur ein Git-LFS-Platzhalter` | `git lfs install && git lfs pull` |
+| `Warte auf Laya … ✗ abgebrochen` | `logs/laya.log` ansehen |
 | `Warte auf Kogito … ✗` | `logs/kogito.log` ansehen; Java-Version prüfen (`java -version`, nötig ist 21) |
 | Laya-Ergebnis `fehler` in der Oberfläche | Laya-Dienst nicht erreichbar; der Fall geht korrekt in die manuelle Prüfung |
 | Änderungen an DMN/BPMN/Oberfläche nicht sichtbar | `BUILD=1 ./start_demo.sh` |
